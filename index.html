@@ -199,6 +199,12 @@ main{
   color:var(--n)
 }
 
+.btn.notify{
+  background:#dce4ec;
+  color:var(--n);
+  margin-top:10px
+}
+
 /* TERMINE */
 
 .app{
@@ -236,6 +242,13 @@ main{
   padding:8px 10px;
   cursor:pointer;
   margin-top:7px
+}
+
+.reminder{
+  color:var(--gt);
+  font-size:13px;
+  font-weight:700;
+  margin-top:5px
 }
 
 /* UMSATZ */
@@ -352,6 +365,28 @@ label{
   color:var(--gt);
   font-size:13px;
   font-weight:700
+}
+
+/* BENACHRICHTIGUNG */
+
+.notification-box{
+  margin-top:16px;
+  padding:14px;
+  border-radius:14px;
+  background:#e4eaf0;
+  color:var(--n);
+  font-size:14px;
+  line-height:1.5
+}
+
+.notification-box.success{
+  background:var(--g);
+  color:var(--gt)
+}
+
+.notification-box.warning{
+  background:var(--r);
+  color:var(--rt)
 }
 
 /* MODAL */
@@ -693,6 +728,46 @@ footer{
       placeholder="z. B. Beratung, Auftrag, Besprechung..."
     ></textarea>
 
+    <label>🔔 Erinnerung</label>
+
+    <select id="aReminder">
+
+      <option value="0">
+        Keine Erinnerung
+      </option>
+
+      <option value="15">
+        15 Minuten vorher
+      </option>
+
+      <option value="30">
+        30 Minuten vorher
+      </option>
+
+      <option value="60">
+        1 Stunde vorher
+      </option>
+
+      <option value="1440">
+        1 Tag vorher
+      </option>
+
+    </select>
+
+    <div
+      id="notificationStatus"
+      class="notification-box"
+    >
+      Benachrichtigungen können aktiviert werden.
+    </div>
+
+    <button
+      class="btn notify"
+      onclick="requestNotifications()"
+    >
+      🔔 Benachrichtigungen aktivieren
+    </button>
+
     <div class="actions">
 
       <button
@@ -879,6 +954,17 @@ function dateStr(date = new Date()){
 }
 
 
+function appointmentDateTime(appointment){
+
+  return new Date(
+    appointment.date +
+    "T" +
+    appointment.time
+  );
+
+}
+
+
 /* =========================
    BEGRÜSSUNG
 ========================= */
@@ -898,6 +984,259 @@ function greet(){
         : "Guten Abend 👋";
 
 }
+
+
+/* =========================
+   BENACHRICHTIGUNGEN
+========================= */
+
+function updateNotificationStatus(){
+
+  const status =
+    document.getElementById(
+      "notificationStatus"
+    );
+
+  if(!("Notification" in window)){
+
+    status.className =
+      "notification-box warning";
+
+    status.textContent =
+      "Dieser Browser unterstützt keine Web-Benachrichtigungen.";
+
+    return;
+
+  }
+
+
+  if(Notification.permission === "granted"){
+
+    status.className =
+      "notification-box success";
+
+    status.textContent =
+      "✓ Benachrichtigungen sind aktiviert.";
+
+  }
+  else if(Notification.permission === "denied"){
+
+    status.className =
+      "notification-box warning";
+
+    status.textContent =
+      "Benachrichtigungen wurden blockiert. Du kannst sie in den Browser-Einstellungen wieder erlauben.";
+
+  }
+  else{
+
+    status.className =
+      "notification-box";
+
+    status.textContent =
+      "Benachrichtigungen sind noch nicht aktiviert.";
+
+  }
+
+}
+
+
+async function requestNotifications(){
+
+  if(!("Notification" in window)){
+
+    alert(
+      "Dein Browser unterstützt keine Benachrichtigungen."
+    );
+
+    return;
+
+  }
+
+
+  try{
+
+    const permission =
+      await Notification.requestPermission();
+
+    updateNotificationStatus();
+
+
+    if(permission === "granted"){
+
+      new Notification(
+        "BusinessBook",
+        {
+          body:
+            "Benachrichtigungen wurden erfolgreich aktiviert. 🔔",
+          icon:
+            ""
+        }
+      );
+
+    }
+
+  }catch(error){
+
+    console.error(
+      "Notification error:",
+      error
+    );
+
+  }
+
+}
+
+
+/* =========================
+   ERINNERUNGEN PRÜFEN
+========================= */
+
+function checkReminders(){
+
+  if(
+    !("Notification" in window) ||
+    Notification.permission !== "granted"
+  ){
+
+    return;
+
+  }
+
+
+  const now =
+    new Date();
+
+
+  let changed = false;
+
+
+  appointments.forEach(
+    appointment => {
+
+      const reminder =
+        Number(
+          appointment.reminder || 0
+        );
+
+
+      if(
+        reminder <= 0 ||
+        appointment.reminderSent
+      ){
+
+        return;
+
+      }
+
+
+      const appointmentTime =
+        appointmentDateTime(
+          appointment
+        );
+
+
+      const reminderTime =
+        new Date(
+          appointmentTime.getTime() -
+          reminder * 60000
+        );
+
+
+      const difference =
+        now.getTime() -
+        reminderTime.getTime();
+
+
+      /*
+        Erinnerung wird ausgelöst,
+        wenn der Erinnerungszeitpunkt
+        erreicht wurde.
+
+        Wir akzeptieren ein Zeitfenster
+        von 0 bis 2 Minuten.
+      */
+
+      if(
+        difference >= 0 &&
+        difference < 120000 &&
+        appointmentTime > now
+      ){
+
+        const reminderText =
+          reminderTextFor(
+            reminder
+          );
+
+
+        new Notification(
+          "🔔 BusinessBook – Termin",
+          {
+            body:
+              reminderText +
+              "\n" +
+              appointment.time +
+              " Uhr – " +
+              appointment.customer,
+            tag:
+              "businessbook-" +
+              appointment.id
+          }
+        );
+
+
+        appointment.reminderSent =
+          true;
+
+        changed = true;
+
+      }
+
+    }
+  );
+
+
+  if(changed){
+
+    write(
+      AK,
+      appointments
+    );
+
+  }
+
+}
+
+
+function reminderTextFor(minutes){
+
+  if(minutes === 15)
+    return "Dein Termin beginnt in 15 Minuten.";
+
+  if(minutes === 30)
+    return "Dein Termin beginnt in 30 Minuten.";
+
+  if(minutes === 60)
+    return "Dein Termin beginnt in 1 Stunde.";
+
+  if(minutes === 1440)
+    return "Dein Termin ist morgen.";
+
+  return "Dein Termin steht bald an.";
+
+}
+
+
+/*
+  Erinnerungen regelmäßig prüfen.
+  Solange BusinessBook geöffnet ist,
+  wird alle 30 Sekunden geprüft.
+*/
+
+setInterval(
+  checkReminders,
+  30000
+);
 
 
 /* =========================
@@ -1114,6 +1453,14 @@ function openAppt(date){
     "aNote"
   ).value = "";
 
+
+  document.getElementById(
+    "aReminder"
+  ).value = "0";
+
+
+  updateNotificationStatus();
+
 }
 
 
@@ -1129,16 +1476,31 @@ function closeAppt(){
 function saveAppt(){
 
   const date =
-    aDate.value;
+    document.getElementById(
+      "aDate"
+    ).value;
 
   const time =
-    aTime.value;
+    document.getElementById(
+      "aTime"
+    ).value;
 
   const customer =
-    aCustomer.value.trim();
+    document.getElementById(
+      "aCustomer"
+    ).value.trim();
 
   const note =
-    aNote.value.trim();
+    document.getElementById(
+      "aNote"
+    ).value.trim();
+
+  const reminder =
+    Number(
+      document.getElementById(
+        "aReminder"
+      ).value
+    );
 
 
   if(
@@ -1156,6 +1518,27 @@ function saveAppt(){
   }
 
 
+  const appointmentTime =
+    new Date(
+      date +
+      "T" +
+      time
+    );
+
+
+  if(
+    appointmentTime <= new Date()
+  ){
+
+    alert(
+      "Der Termin muss in der Zukunft liegen."
+    );
+
+    return;
+
+  }
+
+
   appointments.push({
 
     id: Date.now(),
@@ -1166,7 +1549,11 @@ function saveAppt(){
 
     customer: customer,
 
-    note: note
+    note: note,
+
+    reminder: reminder,
+
+    reminderSent: false
 
   });
 
@@ -1182,6 +1569,8 @@ function saveAppt(){
   renderCal();
 
   renderAppts();
+
+  checkReminders();
 
 }
 
@@ -1219,6 +1608,10 @@ function deleteAppt(id){
 }
 
 
+/* =========================
+   TERMINE ANZEIGEN
+========================= */
+
 function renderAppts(){
 
   const box =
@@ -1244,10 +1637,8 @@ function renderAppts(){
       )
       .filter(
         appointment =>
-          new Date(
-            appointment.date +
-            "T" +
-            appointment.time
+          appointmentDateTime(
+            appointment
           ) >= now
       );
 
@@ -1318,6 +1709,33 @@ function renderAppts(){
                 "</div>"
               : ""
           );
+
+
+        const reminder =
+          Number(
+            appointment.reminder || 0
+          );
+
+
+        if(reminder > 0){
+
+          left.innerHTML +=
+
+            "<div class=reminder>🔔 " +
+
+            reminderTextFor(
+              reminder
+            ).replace(
+              "Dein Termin beginnt in ",
+              ""
+            ).replace(
+              "Dein Termin ist ",
+              ""
+            ) +
+
+            "</div>";
+
+        }
 
 
         const right =
@@ -1407,7 +1825,9 @@ function openInvoice(){
     .classList.add("show");
 
 
-  iNumber.value =
+  document.getElementById(
+    "iNumber"
+  ).value =
     "RE-" +
     new Date().getFullYear() +
     "-" +
@@ -1416,14 +1836,22 @@ function openInvoice(){
     );
 
 
-  iCustomer.value = "";
+  document.getElementById(
+    "iCustomer"
+  ).value = "";
 
-  iAmount.value = "";
+  document.getElementById(
+    "iAmount"
+  ).value = "";
 
-  iDue.value =
+  document.getElementById(
+    "iDue"
+  ).value =
     dateStr();
 
-  iStatus.value =
+  document.getElementById(
+    "iStatus"
+  ).value =
     "open";
 
 }
@@ -1443,21 +1871,31 @@ function closeInvoice(){
 function saveInvoice(){
 
   const number =
-    iNumber.value.trim();
+    document.getElementById(
+      "iNumber"
+    ).value.trim();
 
   const customer =
-    iCustomer.value.trim();
+    document.getElementById(
+      "iCustomer"
+    ).value.trim();
 
   const amount =
     parseFloat(
-      iAmount.value
+      document.getElementById(
+        "iAmount"
+      ).value
     );
 
   const due =
-    iDue.value;
+    document.getElementById(
+      "iDue"
+    ).value;
 
   const status =
-    iStatus.value;
+    document.getElementById(
+      "iStatus"
+    ).value;
 
 
   if(
@@ -2004,6 +2442,10 @@ renderAppts();
 renderInvoices();
 
 renderRevenue();
+
+updateNotificationStatus();
+
+checkReminders();
 
 </script>
 

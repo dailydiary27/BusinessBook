@@ -88,6 +88,89 @@
       margin-bottom: 15px;
     }
 
+    /* KALENDER */
+
+    .calendar-card {
+      grid-column: 1 / -1;
+    }
+
+    .calendar-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 18px;
+    }
+
+    .calendar-title {
+      font-size: 20px;
+      font-weight: 700;
+    }
+
+    .calendar-buttons {
+      display: flex;
+      gap: 8px;
+    }
+
+    .calendar-buttons button {
+      width: 38px;
+      height: 38px;
+      border: none;
+      border-radius: 10px;
+      background: #17263a;
+      color: white;
+      font-size: 18px;
+      cursor: pointer;
+    }
+
+    .weekdays,
+    .calendar {
+      display: grid;
+      grid-template-columns: repeat(7, 1fr);
+      gap: 6px;
+    }
+
+    .weekday {
+      text-align: center;
+      font-size: 12px;
+      font-weight: 700;
+      color: #68727d;
+      padding-bottom: 6px;
+    }
+
+    .day {
+      min-height: 65px;
+      border-radius: 10px;
+      background: white;
+      border: 1px solid #dde1e5;
+      padding: 7px;
+      cursor: pointer;
+      position: relative;
+    }
+
+    .day:hover {
+      border-color: #17263a;
+    }
+
+    .day-number {
+      font-size: 13px;
+      font-weight: 700;
+    }
+
+    .today {
+      background: #e4eaf0;
+      border: 2px solid #17263a;
+    }
+
+    .appointment-dot {
+      width: 7px;
+      height: 7px;
+      background: #78a98a;
+      border-radius: 50%;
+      margin-top: 8px;
+    }
+
+    /* TERMINE */
+
     .appointment {
       display: flex;
       justify-content: space-between;
@@ -131,11 +214,6 @@
       margin-bottom: 5px;
     }
 
-    .label {
-      color: #68727d;
-      font-size: 14px;
-    }
-
     .button {
       width: 100%;
       border: none;
@@ -154,7 +232,8 @@
     }
 
     input,
-    select {
+    select,
+    textarea {
       width: 100%;
       padding: 12px;
       margin-top: 8px;
@@ -163,6 +242,17 @@
       border-radius: 10px;
       background: white;
       font-size: 16px;
+      font-family: inherit;
+    }
+
+    textarea {
+      min-height: 90px;
+      resize: vertical;
+    }
+
+    label {
+      font-size: 14px;
+      font-weight: 600;
     }
 
     .result {
@@ -179,6 +269,48 @@
       grid-column: 1 / -1;
     }
 
+    .modal {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(23, 38, 58, 0.55);
+      z-index: 100;
+      padding: 20px;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .modal-content {
+      background: #f5f6f7;
+      width: 100%;
+      max-width: 500px;
+      border-radius: 20px;
+      padding: 22px;
+      max-height: 90vh;
+      overflow-y: auto;
+    }
+
+    .modal-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 18px;
+    }
+
+    .close {
+      border: none;
+      background: transparent;
+      font-size: 28px;
+      color: #17263a;
+      cursor: pointer;
+    }
+
+    .empty {
+      text-align: center;
+      color: #7b838c;
+      padding: 15px;
+    }
+
     footer {
       text-align: center;
       color: #7b838c;
@@ -187,8 +319,14 @@
     }
 
     @media (max-width: 700px) {
+
       .grid {
         grid-template-columns: 1fr;
+      }
+
+      .calendar-card,
+      .full {
+        grid-column: auto;
       }
 
       main {
@@ -199,12 +337,17 @@
         font-size: 24px;
       }
 
-      .full {
-        grid-column: auto;
+      .day {
+        min-height: 55px;
+      }
+
+      .calendar {
+        gap: 4px;
       }
     }
 
     @media (min-width: 1000px) {
+
       main {
         padding-top: 35px;
       }
@@ -234,140 +377,698 @@
     <p>Hier ist dein heutiger Überblick.</p>
   </section>
 
-  <section class="grid">
+  <!-- KALENDER -->
 
-    <div class="card">
-      <h2>📅 Nächste Termine</h2>
+  <section class="card calendar-card">
 
-      <div class="appointment">
-        <div>
-          <div class="date">Heute</div>
-          <div class="customer">Max Mustermann</div>
-        </div>
-        <div class="time">10:00</div>
+    <div class="calendar-header">
+
+      <div class="calendar-title" id="monthTitle">
+        Kalender
       </div>
 
-      <div class="appointment">
-        <div>
-          <div class="date">Heute</div>
-          <div class="customer">Anna Müller</div>
-        </div>
-        <div class="time">14:30</div>
+      <div class="calendar-buttons">
+        <button onclick="previousMonth()">‹</button>
+        <button onclick="nextMonth()">›</button>
       </div>
 
-      <div class="appointment">
-        <div>
-          <div class="date">Morgen</div>
-          <div class="customer">Thomas Schneider</div>
-        </div>
-        <div class="time">09:00</div>
-      </div>
-
-      <button class="button" onclick="alert('Kalender kommt als nächstes.')">
-        + Termin hinzufügen
-      </button>
     </div>
 
-    <div class="card success">
-      <h2>💰 Umsatz</h2>
-      <div class="amount">2.450,00 €</div>
-      <div>Dieser Monat</div>
+    <div class="weekdays">
+      <div class="weekday">Mo</div>
+      <div class="weekday">Di</div>
+      <div class="weekday">Mi</div>
+      <div class="weekday">Do</div>
+      <div class="weekday">Fr</div>
+      <div class="weekday">Sa</div>
+      <div class="weekday">So</div>
     </div>
 
-    <div class="card">
-      <h2>📊 Überblick</h2>
+    <div class="calendar" id="calendar"></div>
 
-      <div class="appointment">
-        <span>Termine</span>
-        <strong>18</strong>
-      </div>
+    <button class="button" onclick="openModal()">
+      + Termin hinzufügen
+    </button>
 
-      <div class="appointment">
-        <span>Aufträge</span>
-        <strong>12</strong>
-      </div>
+  </section>
 
-      <div class="appointment">
-        <span>Offene Rechnungen</span>
-        <strong>3</strong>
-      </div>
+
+  <!-- NÄCHSTE TERMINE -->
+
+  <section class="card">
+
+    <h2>📅 Nächste Termine</h2>
+
+    <div id="appointmentsList"></div>
+
+  </section>
+
+
+  <!-- UMSATZ -->
+
+  <section class="card success">
+
+    <h2>💰 Umsatz</h2>
+
+    <div class="amount">2.450,00 €</div>
+
+    <div>Dieser Monat</div>
+
+  </section>
+
+
+  <!-- ÜBERBLICK -->
+
+  <section class="card">
+
+    <h2>📊 Überblick</h2>
+
+    <div class="appointment">
+      <span>Termine</span>
+      <strong id="appointmentCount">0</strong>
     </div>
 
-    <div class="card warning">
-      <h2>⚠️ Aufmerksamkeit</h2>
-      <p>3 Rechnungen sind noch offen.</p>
-      <button class="button">
-        Rechnungen ansehen
-      </button>
+    <div class="appointment">
+      <span>Aufträge</span>
+      <strong>12</strong>
     </div>
 
-    <div class="card full">
-      <h2>🧮 Netto / Brutto Rechner</h2>
-
-      <label for="amount">Betrag</label>
-      <input
-        id="amount"
-        type="number"
-        placeholder="z. B. 100"
-        inputmode="decimal"
-      >
-
-      <label for="tax">Steuersatz</label>
-      <select id="tax">
-        <option value="19">19 %</option>
-        <option value="7">7 %</option>
-        <option value="0">0 %</option>
-      </select>
-
-      <button class="button" onclick="calculate()">
-        Berechnen
-      </button>
-
-      <div id="result" class="result"></div>
+    <div class="appointment">
+      <span>Offene Rechnungen</span>
+      <strong>3</strong>
     </div>
+
+  </section>
+
+
+  <!-- WARNUNG -->
+
+  <section class="card warning">
+
+    <h2>⚠️ Aufmerksamkeit</h2>
+
+    <p>3 Rechnungen sind noch offen.</p>
+
+    <button class="button">
+      Rechnungen ansehen
+    </button>
+
+  </section>
+
+
+  <!-- NETTO BRUTTO -->
+
+  <section class="card full">
+
+    <h2>🧮 Netto / Brutto Rechner</h2>
+
+    <label for="amount">Betrag</label>
+
+    <input
+      id="amount"
+      type="number"
+      placeholder="z. B. 100"
+      inputmode="decimal"
+    >
+
+    <label for="tax">Steuersatz</label>
+
+    <select id="tax">
+      <option value="19">19 %</option>
+      <option value="7">7 %</option>
+      <option value="0">0 %</option>
+    </select>
+
+    <button class="button" onclick="calculate()">
+      Berechnen
+    </button>
+
+    <div id="result" class="result"></div>
 
   </section>
 
 </main>
 
+
+<!-- TERMIN MODAL -->
+
+<div class="modal" id="appointmentModal">
+
+  <div class="modal-content">
+
+    <div class="modal-header">
+
+      <h2>Neuer Termin</h2>
+
+      <button class="close" onclick="closeModal()">
+        ×
+      </button>
+
+    </div>
+
+    <label>Datum</label>
+
+    <input
+      id="appointmentDate"
+      type="date"
+    >
+
+    <label>Uhrzeit</label>
+
+    <input
+      id="appointmentTime"
+      type="time"
+    >
+
+    <label>Kunde</label>
+
+    <input
+      id="appointmentCustomer"
+      type="text"
+      placeholder="Name des Kunden"
+    >
+
+    <label>Notiz</label>
+
+    <textarea
+      id="appointmentNote"
+      placeholder="z. B. Beratung, Auftrag, Besprechung..."
+    ></textarea>
+
+    <button class="button" onclick="saveAppointment()">
+      Termin speichern
+    </button>
+
+  </div>
+
+</div>
+
+
 <footer>
   BusinessBook · Deine digitale Business-Verwaltung
 </footer>
 
+
 <script>
-  function calculate() {
 
-    const amount = parseFloat(
-      document.getElementById("amount").value
-    );
+  /* =========================
+     KALENDER
+  ========================= */
 
-    const tax = parseFloat(
-      document.getElementById("tax").value
-    );
+  let currentDate = new Date();
 
-    const result = document.getElementById("result");
+  let appointments =
+    JSON.parse(localStorage.getItem("businessBookAppointments")) || [];
 
-    if (isNaN(amount) || amount <= 0) {
-      result.style.display = "block";
-      result.style.background = "#f2dfe2";
-      result.style.color = "#79343d";
-      result.innerHTML = "Bitte einen gültigen Betrag eingeben.";
-      return;
+
+  function renderCalendar() {
+
+    const calendar =
+      document.getElementById("calendar");
+
+    const monthTitle =
+      document.getElementById("monthTitle");
+
+    calendar.innerHTML = "";
+
+    const year = currentDate.getFullYear();
+    const month = currentDate.getMonth();
+
+    const monthNames = [
+      "Januar",
+      "Februar",
+      "März",
+      "April",
+      "Mai",
+      "Juni",
+      "Juli",
+      "August",
+      "September",
+      "Oktober",
+      "November",
+      "Dezember"
+    ];
+
+    monthTitle.innerText =
+      monthNames[month] + " " + year;
+
+    let firstDay =
+      new Date(year, month, 1).getDay();
+
+    firstDay =
+      firstDay === 0 ? 6 : firstDay - 1;
+
+    const daysInMonth =
+      new Date(year, month + 1, 0).getDate();
+
+
+    for (let i = 0; i < firstDay; i++) {
+
+      const emptyDay =
+        document.createElement("div");
+
+      calendar.appendChild(emptyDay);
     }
 
-    const net = amount;
-    const taxAmount = net * tax / 100;
-    const gross = net + taxAmount;
 
-    result.style.display = "block";
-    result.style.background = "#dcefe3";
-    result.style.color = "#27633d";
+    for (let day = 1; day <= daysInMonth; day++) {
+
+      const dayElement =
+        document.createElement("div");
+
+      dayElement.className = "day";
+
+      const dateString =
+        year + "-" +
+        String(month + 1).padStart(2, "0") +
+        "-" +
+        String(day).padStart(2, "0");
+
+
+      const today =
+        new Date();
+
+      if (
+        day === today.getDate() &&
+        month === today.getMonth() &&
+        year === today.getFullYear()
+      ) {
+
+        dayElement.classList.add("today");
+      }
+
+
+      const number =
+        document.createElement("div");
+
+      number.className =
+        "day-number";
+
+      number.innerText =
+        day;
+
+      dayElement.appendChild(number);
+
+
+      const hasAppointment =
+        appointments.some(
+          appointment =>
+            appointment.date === dateString
+        );
+
+
+      if (hasAppointment) {
+
+        const dot =
+          document.createElement("div");
+
+        dot.className =
+          "appointment-dot";
+
+        dayElement.appendChild(dot);
+      }
+
+
+      dayElement.onclick = function() {
+
+        openModal(dateString);
+
+      };
+
+
+      calendar.appendChild(dayElement);
+
+    }
+
+  }
+
+
+  function previousMonth() {
+
+    currentDate.setMonth(
+      currentDate.getMonth() - 1
+    );
+
+    renderCalendar();
+
+  }
+
+
+  function nextMonth() {
+
+    currentDate.setMonth(
+      currentDate.getMonth() + 1
+    );
+
+    renderCalendar();
+
+  }
+
+
+  /* =========================
+     TERMIN
+  ========================= */
+
+
+  function openModal(date = null) {
+
+    const modal =
+      document.getElementById(
+        "appointmentModal"
+      );
+
+    modal.style.display =
+      "flex";
+
+
+    if (date) {
+
+      document.getElementById(
+        "appointmentDate"
+      ).value = date;
+
+    } else {
+
+      const today =
+        new Date();
+
+      document.getElementById(
+        "appointmentDate"
+      ).value =
+        today.toISOString().split("T")[0];
+
+    }
+
+  }
+
+
+  function closeModal() {
+
+    document.getElementById(
+      "appointmentModal"
+    ).style.display =
+      "none";
+
+  }
+
+
+  function saveAppointment() {
+
+    const date =
+      document.getElementById(
+        "appointmentDate"
+      ).value;
+
+    const time =
+      document.getElementById(
+        "appointmentTime"
+      ).value;
+
+    const customer =
+      document.getElementById(
+        "appointmentCustomer"
+      ).value.trim();
+
+    const note =
+      document.getElementById(
+        "appointmentNote"
+      ).value.trim();
+
+
+    if (!date || !time || !customer) {
+
+      alert(
+        "Bitte Datum, Uhrzeit und Kunde eingeben."
+      );
+
+      return;
+
+    }
+
+
+    const appointment = {
+
+      id: Date.now(),
+
+      date: date,
+
+      time: time,
+
+      customer: customer,
+
+      note: note
+
+    };
+
+
+    appointments.push(
+      appointment
+    );
+
+
+    localStorage.setItem(
+      "businessBookAppointments",
+      JSON.stringify(appointments)
+    );
+
+
+    document.getElementById(
+      "appointmentTime"
+    ).value = "";
+
+    document.getElementById(
+      "appointmentCustomer"
+    ).value = "";
+
+    document.getElementById(
+      "appointmentNote"
+    ).value = "";
+
+
+    closeModal();
+
+    renderCalendar();
+
+    renderAppointments();
+
+  }
+
+
+  function renderAppointments() {
+
+    const list =
+      document.getElementById(
+        "appointmentsList"
+      );
+
+    list.innerHTML = "";
+
+
+    const sorted =
+      [...appointments].sort(
+        (a, b) =>
+          (a.date + a.time)
+            .localeCompare(
+              b.date + b.time
+            )
+      );
+
+
+    const upcoming =
+      sorted.filter(
+        appointment =>
+          new Date(
+            appointment.date +
+            "T" +
+            appointment.time
+          ) >= new Date()
+      );
+
+
+    document.getElementById(
+      "appointmentCount"
+    ).innerText =
+      appointments.length;
+
+
+    if (upcoming.length === 0) {
+
+      list.innerHTML =
+        '<div class="empty">Keine kommenden Termine.</div>';
+
+      return;
+
+    }
+
+
+    upcoming
+      .slice(0, 5)
+      .forEach(appointment => {
+
+        const element =
+          document.createElement("div");
+
+        element.className =
+          "appointment";
+
+
+        const formattedDate =
+          new Date(
+            appointment.date +
+            "T00:00:00"
+          ).toLocaleDateString(
+            "de-DE",
+            {
+              day: "2-digit",
+              month: "2-digit",
+              year: "numeric"
+            }
+          );
+
+
+        element.innerHTML = `
+
+          <div>
+
+            <div class="date">
+              ${formattedDate}
+            </div>
+
+            <div class="customer">
+              ${escapeHtml(appointment.customer)}
+            </div>
+
+            ${
+              appointment.note
+                ? `<div class="customer">
+                    ${escapeHtml(appointment.note)}
+                   </div>`
+                : ""
+            }
+
+          </div>
+
+          <div class="time">
+            ${appointment.time}
+          </div>
+
+        `;
+
+
+        list.appendChild(element);
+
+      });
+
+  }
+
+
+  function escapeHtml(text) {
+
+    const div =
+      document.createElement("div");
+
+    div.innerText =
+      text;
+
+    return div.innerHTML;
+
+  }
+
+
+  /* =========================
+     NETTO / BRUTTO
+  ========================= */
+
+
+  function calculate() {
+
+    const amount =
+      parseFloat(
+        document.getElementById(
+          "amount"
+        ).value
+      );
+
+    const tax =
+      parseFloat(
+        document.getElementById(
+          "tax"
+        ).value
+      );
+
+    const result =
+      document.getElementById(
+        "result"
+      );
+
+
+    if (
+      isNaN(amount) ||
+      amount <= 0
+    ) {
+
+      result.style.display =
+        "block";
+
+      result.style.background =
+        "#f2dfe2";
+
+      result.style.color =
+        "#79343d";
+
+      result.innerHTML =
+        "Bitte einen gültigen Betrag eingeben.";
+
+      return;
+
+    }
+
+
+    const net =
+      amount;
+
+    const taxAmount =
+      net * tax / 100;
+
+    const gross =
+      net + taxAmount;
+
+
+    result.style.display =
+      "block";
+
+    result.style.background =
+      "#dcefe3";
+
+    result.style.color =
+      "#27633d";
+
 
     result.innerHTML =
-      "Netto: " + net.toFixed(2) + " €<br>" +
-      "Steuer: " + taxAmount.toFixed(2) + " €<br>" +
-      "Brutto: " + gross.toFixed(2) + " €";
+
+      "Netto: " +
+      net.toFixed(2) +
+      " €<br>" +
+
+      "Steuer: " +
+      taxAmount.toFixed(2) +
+      " €<br>" +
+
+      "Brutto: " +
+      gross.toFixed(2) +
+      " €";
+
   }
+
+
+  /* =========================
+     START
+  ========================= */
+
+  renderCalendar();
+
+  renderAppointments();
+
 </script>
 
 </body>

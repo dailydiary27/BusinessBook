@@ -3,3327 +3,2819 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
+
 <meta name="theme-color" content="#17263a">
 <meta name="description" content="BusinessBook – deine digitale Business-Verwaltung">
 
-<link rel="apple-touch-icon" href="./icon-192.png">
-<link rel="icon" type="image/png" sizes="192x192" href="./icon-192.png">
-<link rel="icon" type="image/png" sizes="512x512" href="./icon-512.png">
+<link rel="apple-touch-icon" href="./icons/icon-192.png">
+<link rel="icon" type="image/png" sizes="192x192" href="./icons/icon-192.png">
+<link rel="icon" type="image/png" sizes="512x512" href="./icons/icon-512.png">
 <link rel="manifest" href="./manifest.json">
 
 <title>BusinessBook</title>
 
 <style>
-*{
-  box-sizing:border-box;
-  margin:0;
-  padding:0
-}
 
-body{
-  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
-  background:#e9ecef;
-  color:#17263a
+*{
+box-sizing:border-box;
+margin:0;
+padding:0
 }
 
 :root{
-  --n:#17263a;
-  --c:#f7f8f9;
-  --m:#68727d;
-  --l:#d8dde2;
-  --g:#dcefe3;
-  --gt:#27633d;
-  --r:#f2dfe2;
-  --rt:#79343d;
-  --blue:#e4eaf0
+--navy:#17263a;
+--bg:#e9ecef;
+--card:#f7f8f9;
+--white:#fff;
+--text:#17263a;
+--muted:#68727d;
+--border:#d8dde2;
+
+--green:#dcefe3;
+--greenText:#27633d;
+
+--red:#f2dfe2;
+--redText:#79343d;
+
+--blue:#e4eaf0;
+}
+
+body{
+font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+background:var(--bg);
+color:var(--text);
+padding-bottom:90px;
 }
 
 header{
-  background:var(--n);
-  color:white;
-  padding:26px 20px;
-  position:sticky;
-  top:0;
-  z-index:20
+background:var(--navy);
+color:#fff;
+padding:22px 18px;
+position:sticky;
+top:0;
+z-index:50;
 }
 
-.head{
-  max-width:1200px;
-  margin:auto
+.header-inner{
+max-width:1200px;
+margin:auto;
 }
 
 .logo{
-  font-size:34px;
-  font-weight:800
+font-size:30px;
+font-weight:800;
 }
 
-.sub{
-  font-size:17px;
-  opacity:.72;
-  margin-top:4px
+.subtitle{
+font-size:15px;
+opacity:.7;
+margin-top:3px;
 }
+
+/* NAVIGATION */
+
+.tabs{
+position:sticky;
+top:79px;
+z-index:40;
+background:#fff;
+border-bottom:1px solid var(--border);
+overflow-x:auto;
+}
+
+.tabs-inner{
+max-width:1200px;
+margin:auto;
+display:flex;
+}
+
+.tab{
+border:0;
+background:none;
+padding:15px 18px;
+font-size:15px;
+font-weight:700;
+color:var(--muted);
+white-space:nowrap;
+cursor:pointer;
+}
+
+.tab.active{
+color:var(--navy);
+border-bottom:3px solid var(--navy);
+}
+
+/* CONTENT */
 
 main{
-  max-width:1200px;
-  margin:auto;
-  padding:28px 20px
+max-width:1200px;
+margin:auto;
+padding:25px 18px;
 }
 
-.welcome{
-  margin-bottom:22px
+.page{
+display:none;
 }
 
-.welcome h1{
-  font-size:34px
+.page.active{
+display:block;
 }
 
-.welcome p{
-  color:var(--m);
-  font-size:19px;
-  margin-top:5px
+.page-title{
+font-size:30px;
+font-weight:800;
+margin-bottom:5px;
+}
+
+.page-subtitle{
+color:var(--muted);
+margin-bottom:22px;
+font-size:17px;
 }
 
 .grid{
-  display:grid;
-  grid-template-columns:repeat(2,minmax(0,1fr));
-  gap:16px
+display:grid;
+grid-template-columns:repeat(2,minmax(0,1fr));
+gap:16px;
 }
 
 .card{
-  background:var(--c);
-  border-radius:22px;
-  padding:24px;
-  box-shadow:0 8px 25px rgba(23,38,58,.08)
+background:var(--card);
+border-radius:20px;
+padding:22px;
+box-shadow:0 7px 22px rgba(23,38,58,.07);
+}
+
+.card.full{
+grid-column:1/-1;
 }
 
 .card h2{
-  font-size:23px;
-  margin-bottom:18px
+font-size:21px;
+margin-bottom:16px;
 }
 
-.full,
-.calendar-card{
-  grid-column:1/-1
+/* DASHBOARD */
+
+.dashboard-grid{
+display:grid;
+grid-template-columns:repeat(4,minmax(0,1fr));
+gap:14px;
+margin-bottom:18px;
 }
 
-/* KALENDER */
-
-.calhead{
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  margin-bottom:20px
+.stat-card{
+background:var(--card);
+border-radius:18px;
+padding:19px;
 }
 
-.month{
-  font-size:27px;
-  font-weight:800
+.stat-label{
+color:var(--muted);
+font-size:14px;
 }
 
-.nav{
-  display:flex;
-  gap:10px
+.stat-value{
+font-size:28px;
+font-weight:800;
+margin-top:7px;
 }
 
-.nav button{
-  width:48px;
-  height:48px;
-  border:0;
-  border-radius:14px;
-  background:var(--n);
-  color:#fff;
-  font-size:25px;
-  cursor:pointer
+.stat-green{
+background:var(--green);
+color:var(--greenText);
 }
 
-.weekdays,
-.calendar{
-  display:grid;
-  grid-template-columns:repeat(7,minmax(0,1fr));
-  gap:7px
-}
-
-.weekday{
-  text-align:center;
-  font-size:14px;
-  font-weight:700;
-  color:var(--m);
-  padding-bottom:7px
-}
-
-.day{
-  min-height:76px;
-  border-radius:14px;
-  background:#fff;
-  border:1px solid var(--l);
-  padding:9px;
-  cursor:pointer
-}
-
-.day:hover{
-  border-color:var(--n)
-}
-
-.daynum{
-  font-weight:800;
-  font-size:16px
-}
-
-.today{
-  background:#e4eaf0;
-  border:2px solid var(--n)
-}
-
-.dot{
-  width:8px;
-  height:8px;
-  background:#78a98a;
-  border-radius:50%;
-  margin-top:10px
+.stat-red{
+background:var(--red);
+color:var(--redText);
 }
 
 /* BUTTONS */
 
 .btn{
-  width:100%;
-  border:0;
-  border-radius:14px;
-  padding:15px;
-  margin-top:16px;
-  background:var(--n);
-  color:#fff;
-  font-size:17px;
-  font-weight:700;
-  cursor:pointer
+width:100%;
+border:0;
+border-radius:12px;
+padding:14px;
+background:var(--navy);
+color:#fff;
+font-size:16px;
+font-weight:700;
+cursor:pointer;
+margin-top:10px;
 }
 
-.btn:hover{
-  opacity:.92
+.btn.secondary{
+background:#dfe4e8;
+color:var(--navy);
 }
 
-.btn.alt{
-  background:#dfe4e8;
-  color:var(--n)
+.btn.danger{
+background:#79343d;
 }
 
-.btn.green{
-  background:#27633d
+.small-btn{
+border:0;
+background:var(--navy);
+color:#fff;
+border-radius:9px;
+padding:8px 10px;
+font-weight:600;
+cursor:pointer;
 }
 
-.btn.red{
-  background:#79343d
+.small-btn.red{
+background:#79343d;
 }
 
-/* TERMINE */
+/* FORM */
 
-.app{
-  display:flex;
-  justify-content:space-between;
-  gap:15px;
-  align-items:center;
-  padding:16px 0;
-  border-bottom:1px solid var(--l)
+label{
+display:block;
+font-size:14px;
+font-weight:700;
+margin-top:10px;
 }
-
-.app:last-child{
-  border:0
-}
-
-.date{
-  font-weight:800
-}
-
-.time{
-  font-weight:800
-}
-
-.customer{
-  color:var(--m);
-  font-size:15px;
-  margin-top:4px
-}
-
-.small{
-  border:0;
-  background:var(--n);
-  color:#fff;
-  border-radius:9px;
-  padding:8px 10px;
-  cursor:pointer;
-  margin-top:7px
-}
-
-/* UMSATZ */
-
-.success{
-  background:var(--g);
-  color:var(--gt)
-}
-
-.warning{
-  background:var(--r);
-  color:var(--rt)
-}
-
-.amount{
-  font-size:52px;
-  font-weight:800
-}
-
-.revenue-sub{
-  font-size:20px;
-  margin-top:5px
-}
-
-/* ÜBERBLICK */
-
-.stat{
-  display:flex;
-  justify-content:space-between;
-  padding:17px 0;
-  border-bottom:1px solid var(--l);
-  font-size:19px
-}
-
-.stat:last-child{
-  border:0
-}
-
-/* FORMULARE */
 
 input,
 select,
 textarea{
-  width:100%;
-  padding:14px;
-  margin:8px 0 14px;
-  border:1px solid #ccd2d8;
-  border-radius:12px;
-  background:white;
-  color:var(--n);
-  font-size:17px
+width:100%;
+padding:13px;
+margin-top:7px;
+border:1px solid #ccd2d8;
+border-radius:11px;
+background:#fff;
+color:var(--navy);
+font-size:16px;
 }
 
 textarea{
-  min-height:100px;
-  resize:vertical
+min-height:90px;
+resize:vertical;
 }
 
-label{
-  font-size:15px;
-  font-weight:700
+/* FINANCE */
+
+.money-row{
+display:grid;
+grid-template-columns:1fr 1fr;
+gap:14px;
 }
 
-.result{
-  display:none;
-  margin-top:15px;
-  padding:17px;
-  border-radius:14px;
-  font-weight:700;
-  line-height:1.65
+.income{
+background:var(--green);
+color:var(--greenText);
 }
 
-/* RECHNUNGEN */
+.expense{
+background:var(--red);
+color:var(--redText);
+}
+
+.balance-positive{
+background:var(--green);
+color:var(--greenText);
+}
+
+.balance-negative{
+background:var(--red);
+color:var(--redText);
+}
+
+/* LIST */
+
+.list{
+display:grid;
+gap:10px;
+}
+
+.item{
+background:#fff;
+border:1px solid var(--border);
+border-radius:13px;
+padding:14px;
+display:flex;
+justify-content:space-between;
+gap:12px;
+align-items:center;
+}
+
+.item-title{
+font-weight:800;
+}
+
+.item-sub{
+font-size:14px;
+color:var(--muted);
+margin-top:4px;
+}
+
+.item-right{
+text-align:right;
+}
+
+.amount-positive{
+color:var(--greenText);
+font-weight:800;
+}
+
+.amount-negative{
+color:var(--redText);
+font-weight:800;
+}
+
+.actions{
+display:flex;
+gap:6px;
+flex-wrap:wrap;
+margin-top:7px;
+}
+
+/* MONTH */
+
+.month-header{
+display:flex;
+justify-content:space-between;
+align-items:center;
+margin-bottom:18px;
+}
+
+.month-title{
+font-size:24px;
+font-weight:800;
+}
+
+.month-nav{
+display:flex;
+gap:7px;
+}
+
+.month-nav button{
+width:43px;
+height:43px;
+border:0;
+border-radius:11px;
+background:var(--navy);
+color:#fff;
+font-size:22px;
+cursor:pointer;
+}
+
+.month-summary{
+display:grid;
+grid-template-columns:repeat(3,1fr);
+gap:12px;
+}
+
+.month-box{
+padding:17px;
+border-radius:14px;
+background:#fff;
+border:1px solid var(--border);
+}
+
+.month-box strong{
+display:block;
+font-size:22px;
+margin-top:5px;
+}
+
+/* CALENDAR */
+
+.weekdays,
+.calendar{
+display:grid;
+grid-template-columns:repeat(7,1fr);
+gap:6px;
+}
+
+.weekday{
+text-align:center;
+font-size:13px;
+font-weight:700;
+color:var(--muted);
+padding-bottom:6px;
+}
+
+.day{
+min-height:68px;
+background:#fff;
+border:1px solid var(--border);
+border-radius:11px;
+padding:8px;
+cursor:pointer;
+}
+
+.day.today{
+border:2px solid var(--navy);
+background:var(--blue);
+}
+
+.day-number{
+font-weight:800;
+}
+
+.dot{
+width:7px;
+height:7px;
+border-radius:50%;
+background:#78a98a;
+margin-top:8px;
+}
+
+/* EMPTY */
 
 .empty{
-  text-align:center;
-  color:#7b838c;
-  padding:20px
-}
-
-.invoice-list{
-  display:grid;
-  gap:10px
-}
-
-.invoice{
-  background:#fff;
-  border:1px solid var(--l);
-  border-radius:14px;
-  padding:15px;
-  display:flex;
-  justify-content:space-between;
-  gap:12px
-}
-
-.invoice span{
-  display:block;
-  color:var(--m);
-  font-size:14px;
-  margin-top:4px
-}
-
-.right{
-  text-align:right
-}
-
-.open{
-  color:var(--rt);
-  font-size:13px;
-  font-weight:700
-}
-
-.paid{
-  color:var(--gt);
-  font-size:13px;
-  font-weight:700
-}
-
-/* ERINNERUNGEN */
-
-.reminder-box{
-  background:#eef1f4;
-  border-radius:14px;
-  padding:14px;
-  margin:4px 0 8px
-}
-
-.reminder-row{
-  display:flex;
-  align-items:center;
-  gap:10px;
-  margin:9px 0
-}
-
-.reminder-row input{
-  width:auto;
-  margin:0
-}
-
-.permission{
-  background:#e4eaf0;
-  border-radius:14px;
-  padding:14px;
-  margin:10px 0;
-  color:var(--n)
-}
-
-.permission button{
-  border:0;
-  border-radius:10px;
-  background:var(--n);
-  color:#fff;
-  padding:10px 12px;
-  margin-top:8px;
-  font-weight:700;
-  cursor:pointer
-}
-
-/* FINANZEN */
-
-.finance-summary{
-  display:grid;
-  grid-template-columns:repeat(3,1fr);
-  gap:12px;
-  margin-bottom:20px
-}
-
-.finance-box{
-  border-radius:16px;
-  padding:18px
-}
-
-.finance-box h3{
-  font-size:15px;
-  margin-bottom:7px
-}
-
-.finance-value{
-  font-size:27px;
-  font-weight:800
-}
-
-.income-box{
-  background:#dcefe3;
-  color:#27633d
-}
-
-.expense-box{
-  background:#f2dfe2;
-  color:#79343d
-}
-
-.balance-box{
-  background:#e4eaf0;
-  color:#17263a
-}
-
-.finance-month{
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  gap:10px;
-  margin-bottom:18px
-}
-
-.finance-month button{
-  border:0;
-  background:var(--n);
-  color:#fff;
-  width:44px;
-  height:44px;
-  border-radius:12px;
-  font-size:22px;
-  cursor:pointer
-}
-
-.finance-month-title{
-  font-size:22px;
-  font-weight:800;
-  text-align:center;
-  flex:1
-}
-
-.finance-list{
-  display:grid;
-  gap:10px;
-  margin-top:15px
-}
-
-.finance-entry{
-  background:#fff;
-  border:1px solid var(--l);
-  border-radius:15px;
-  padding:15px;
-  display:flex;
-  justify-content:space-between;
-  gap:15px;
-  align-items:center
-}
-
-.finance-entry-left strong{
-  display:block;
-  font-size:17px
-}
-
-.finance-entry-left span{
-  display:block;
-  color:var(--m);
-  font-size:14px;
-  margin-top:4px
-}
-
-.finance-entry-right{
-  text-align:right;
-  white-space:nowrap
-}
-
-.finance-income{
-  color:var(--gt);
-  font-weight:800
-}
-
-.finance-expense{
-  color:var(--rt);
-  font-weight:800
-}
-
-.category-badge{
-  display:inline-block;
-  background:#e4eaf0;
-  color:var(--n);
-  border-radius:8px;
-  padding:4px 8px;
-  font-size:12px;
-  margin-top:5px
-}
-
-.finance-actions{
-  display:flex;
-  gap:7px;
-  justify-content:flex-end
-}
-
-.finance-actions button{
-  border:0;
-  border-radius:8px;
-  padding:7px 9px;
-  cursor:pointer;
-  background:var(--n);
-  color:white;
-  font-size:12px
-}
-
-.chart{
-  margin-top:20px;
-  display:grid;
-  gap:8px
-}
-
-.chart-row{
-  display:grid;
-  grid-template-columns:80px 1fr 80px;
-  gap:10px;
-  align-items:center
-}
-
-.chart-label{
-  font-size:13px;
-  color:var(--m)
-}
-
-.chart-bar{
-  height:20px;
-  background:#e1e5e8;
-  border-radius:10px;
-  overflow:hidden
-}
-
-.chart-fill{
-  height:100%;
-  border-radius:10px
-}
-
-.chart-income{
-  background:#78a98a
-}
-
-.chart-expense{
-  background:#c77a83
+text-align:center;
+color:var(--muted);
+padding:25px 10px;
 }
 
 /* MODAL */
 
 .modal{
-  display:none;
-  position:fixed;
-  inset:0;
-  background:rgba(23,38,58,.62);
-  z-index:100;
-  align-items:center;
-  justify-content:center;
-  padding:18px
+display:none;
+position:fixed;
+inset:0;
+background:rgba(23,38,58,.65);
+z-index:100;
+align-items:center;
+justify-content:center;
+padding:16px;
 }
 
 .modal.show{
-  display:flex
+display:flex;
 }
 
-.modalbox{
-  background:var(--c);
-  width:100%;
-  max-width:520px;
-  border-radius:22px;
-  padding:24px;
-  max-height:92vh;
-  overflow:auto
+.modal-box{
+background:var(--card);
+width:100%;
+max-width:520px;
+border-radius:20px;
+padding:22px;
+max-height:92vh;
+overflow:auto;
 }
 
-.modalhead{
-  display:flex;
-  justify-content:space-between;
-  margin-bottom:18px
+.modal-head{
+display:flex;
+justify-content:space-between;
+align-items:center;
+margin-bottom:15px;
 }
 
 .close{
-  border:0;
-  background:none;
-  font-size:32px;
-  cursor:pointer;
-  color:var(--n)
+border:0;
+background:none;
+font-size:30px;
+cursor:pointer;
 }
-
-.actions{
-  display:flex;
-  gap:10px
-}
-
-.actions .btn{
-  margin-top:5px
-}
-
-/* FOOTER */
 
 footer{
-  text-align:center;
-  color:#7b838c;
-  font-size:14px;
-  padding:34px 20px 45px
+text-align:center;
+color:var(--muted);
+padding:30px 15px;
+font-size:13px;
 }
 
 /* MOBILE */
 
-@media(max-width:700px){
+@media(max-width:800px){
 
-  main{
-    padding:24px 15px
-  }
-
-  .grid{
-    grid-template-columns:1fr
-  }
-
-  .full,
-  .calendar-card{
-    grid-column:auto
-  }
-
-  .logo{
-    font-size:34px
-  }
-
-  .welcome h1{
-    font-size:31px
-  }
-
-  .card{
-    padding:20px
-  }
-
-  .day{
-    min-height:68px
-  }
-
-  .amount{
-    font-size:45px
-  }
-
-  .finance-summary{
-    grid-template-columns:1fr
-  }
-
-  .finance-entry{
-    align-items:flex-start
-  }
+.dashboard-grid{
+grid-template-columns:1fr 1fr;
 }
 
-@media(max-width:420px){
-
-  .day{
-    min-height:58px;
-    padding:7px
-  }
-
-  .daynum{
-    font-size:14px
-  }
-
-  .calendar,
-  .weekdays{
-    gap:4px
-  }
-
-  .month{
-    font-size:22px
-  }
-
-  .chart-row{
-    grid-template-columns:65px 1fr 65px
-  }
 }
+
+@media(max-width:650px){
+
+.grid{
+grid-template-columns:1fr;
+}
+
+.card.full{
+grid-column:auto;
+}
+
+.money-row{
+grid-template-columns:1fr;
+}
+
+.month-summary{
+grid-template-columns:1fr;
+}
+
+}
+
+@media(max-width:450px){
+
+.dashboard-grid{
+grid-template-columns:1fr 1fr;
+}
+
+.stat-value{
+font-size:23px;
+}
+
+.tab{
+padding:14px 13px;
+font-size:14px;
+}
+
+.day{
+min-height:55px;
+padding:6px;
+}
+
+}
+
 </style>
 </head>
 
 <body>
 
 <header>
-  <div class="head">
-    <div class="logo">BusinessBook</div>
-    <div class="sub">Deine Business-Verwaltung</div>
-  </div>
+<div class="header-inner">
+<div class="logo">BusinessBook</div>
+<div class="subtitle">Deine Business-Verwaltung</div>
+</div>
 </header>
+
+<nav class="tabs">
+<div class="tabs-inner">
+
+<button class="tab active" onclick="showPage('home',this)">
+🏠 Start
+</button>
+
+<button class="tab" onclick="showPage('appointments',this)">
+📅 Termine
+</button>
+
+<button class="tab" onclick="showPage('finance',this)">
+💰 Finanzen
+</button>
+
+<button class="tab" onclick="showPage('invoices',this)">
+🧾 Rechnungen
+</button>
+
+<button class="tab" onclick="showPage('reports',this)">
+📊 Auswertung
+</button>
+
+<button class="tab" onclick="showPage('settings',this)">
+⚙️ Einstellungen
+</button>
+
+</div>
+</nav>
+
 
 <main>
 
-<section class="welcome">
-  <h1 id="greeting">Guten Morgen 👋</h1>
-  <p>Hier ist dein heutiger Überblick.</p>
-</section>
+<!-- ================= START ================= -->
+
+<section id="home" class="page active">
+
+<h1 class="page-title">Guten Tag 👋</h1>
+
+<p class="page-subtitle">
+Hier ist dein aktueller Überblick.
+</p>
+
+<div class="dashboard-grid">
+
+<div class="stat-card stat-green">
+<div class="stat-label">Einnahmen</div>
+<div class="stat-value" id="homeIncome">0,00 €</div>
+</div>
+
+<div class="stat-card stat-red">
+<div class="stat-label">Ausgaben</div>
+<div class="stat-value" id="homeExpenses">0,00 €</div>
+</div>
+
+<div class="stat-card" id="homeBalanceCard">
+<div class="stat-label">Gewinn / Saldo</div>
+<div class="stat-value" id="homeBalance">0,00 €</div>
+</div>
+
+<div class="stat-card">
+<div class="stat-label">Termine</div>
+<div class="stat-value" id="homeAppointments">0</div>
+</div>
+
+</div>
 
 <div class="grid">
 
-<!-- KALENDER -->
+<div class="card">
 
-<section class="card calendar-card">
+<h2>📅 Nächste Termine</h2>
 
-  <div class="calhead">
+<div id="homeAppointmentsList"></div>
 
-    <div class="month" id="monthTitle"></div>
-
-    <div class="nav">
-      <button onclick="prevMonth()">‹</button>
-      <button onclick="nextMonth()">›</button>
-    </div>
-
-  </div>
-
-  <div class="weekdays">
-    <div class="weekday">Mo</div>
-    <div class="weekday">Di</div>
-    <div class="weekday">Mi</div>
-    <div class="weekday">Do</div>
-    <div class="weekday">Fr</div>
-    <div class="weekday">Sa</div>
-    <div class="weekday">So</div>
-  </div>
-
-  <div class="calendar" id="calendar"></div>
-
-  <button class="btn" onclick="openAppt()">
-    + Termin hinzufügen
-  </button>
-
-</section>
-
-
-<!-- NÄCHSTE TERMINE -->
-
-<section class="card">
-
-  <h2>📅 Nächste Termine</h2>
-
-  <div id="appointments"></div>
-
-</section>
-
-
-<!-- UMSATZ -->
-
-<section class="card success">
-
-  <h2>💰 Umsatz</h2>
-
-  <div class="amount" id="revenue">
-    0,00 €
-  </div>
-
-  <div class="revenue-sub">
-    Dieser Monat
-  </div>
-
-</section>
-
-
-<!-- ÜBERBLICK -->
-
-<section class="card">
-
-  <h2>📊 Überblick</h2>
-
-  <div class="stat">
-    <span>Termine</span>
-    <strong id="apptCount">0</strong>
-  </div>
-
-  <div class="stat">
-    <span>Aufträge</span>
-    <strong>12</strong>
-  </div>
-
-  <div class="stat">
-    <span>Offene Rechnungen</span>
-    <strong id="openCount">0</strong>
-  </div>
-
-</section>
-
-
-<!-- WARNUNG -->
-
-<section class="card warning">
-
-  <h2>⚠️ Aufmerksamkeit</h2>
-
-  <p id="warning">
-    Keine offenen Rechnungen.
-  </p>
-
-  <button
-    class="btn"
-    onclick="document.getElementById('invoices').scrollIntoView({behavior:'smooth'})"
-  >
-    Rechnungen ansehen
-  </button>
-
-</section>
-
-
-<!-- RECHNUNGEN -->
-
-<section class="card" id="invoices">
-
-  <h2>🧾 Rechnungen</h2>
-
-  <div id="invoiceList" class="invoice-list"></div>
-
-  <button class="btn" onclick="openInvoice()">
-    + Rechnung hinzufügen
-  </button>
-
-</section>
-
-
-<!-- FINANZEN -->
-
-<section class="card full" id="finanzen">
-
-  <h2>💼 Finanzen</h2>
-
-  <div class="finance-summary">
-
-    <div class="finance-box income-box">
-      <h3>💰 Einnahmen</h3>
-      <div class="finance-value" id="financeIncome">
-        0,00 €
-      </div>
-    </div>
-
-    <div class="finance-box expense-box">
-      <h3>💸 Ausgaben</h3>
-      <div class="finance-value" id="financeExpense">
-        0,00 €
-      </div>
-    </div>
-
-    <div class="finance-box balance-box">
-      <h3>📊 Gewinn / Saldo</h3>
-      <div class="finance-value" id="financeBalance">
-        0,00 €
-      </div>
-    </div>
-
-  </div>
-
-  <div class="finance-month">
-
-    <button onclick="previousFinanceMonth()">‹</button>
-
-    <div
-      class="finance-month-title"
-      id="financeMonthTitle"
-    ></div>
-
-    <button onclick="nextFinanceMonth()">›</button>
-
-  </div>
-
-  <button
-    class="btn green"
-    onclick="openFinance('income')"
-  >
-    + Einnahme hinzufügen
-  </button>
-
-  <button
-    class="btn red"
-    onclick="openFinance('expense')"
-  >
-    + Ausgabe hinzufügen
-  </button>
-
-  <div id="financeList" class="finance-list"></div>
-
-  <div class="chart" id="financeChart"></div>
-
-</section>
-
-
-<!-- NETTO BRUTTO -->
-
-<section class="card full">
-
-  <h2>🧮 Netto / Brutto Rechner</h2>
-
-  <label>Betrag</label>
-
-  <input
-    id="amount"
-    type="number"
-    min="0"
-    step=".01"
-    placeholder="z. B. 100"
-  >
-
-  <label>Steuersatz</label>
-
-  <select id="tax">
-    <option value="19">19 %</option>
-    <option value="7">7 %</option>
-    <option value="0">0 %</option>
-  </select>
-
-  <button class="btn" onclick="calc()">
-    Berechnen
-  </button>
-
-  <div id="result" class="result"></div>
-
-</section>
+<button class="btn"
+onclick="showPageById('appointments')">
+Termine öffnen
+</button>
 
 </div>
+
+<div class="card">
+
+<h2>⚠️ Offene Rechnungen</h2>
+
+<div id="homeOpenInvoices">
+Keine offenen Rechnungen.
+</div>
+
+<button class="btn"
+onclick="showPageById('invoices')">
+Rechnungen öffnen
+</button>
+
+</div>
+
+</div>
+
+</section>
+
+
+<!-- ================= TERMINE ================= -->
+
+<section id="appointments" class="page">
+
+<h1 class="page-title">📅 Termine</h1>
+
+<p class="page-subtitle">
+Dein Kalender und deine Erinnerungen.
+</p>
+
+<div class="grid">
+
+<div class="card full">
+
+<div class="month-header">
+
+<div class="month-title" id="calendarTitle"></div>
+
+<div class="month-nav">
+
+<button onclick="changeMonth(-1)">‹</button>
+
+<button onclick="changeMonth(1)">›</button>
+
+</div>
+
+</div>
+
+<div class="weekdays">
+
+<div class="weekday">Mo</div>
+<div class="weekday">Di</div>
+<div class="weekday">Mi</div>
+<div class="weekday">Do</div>
+<div class="weekday">Fr</div>
+<div class="weekday">Sa</div>
+<div class="weekday">So</div>
+
+</div>
+
+<div id="calendar" class="calendar"></div>
+
+<button class="btn"
+onclick="openAppointment()">
++ Termin hinzufügen
+</button>
+
+</div>
+
+
+<div class="card full">
+
+<h2>Meine nächsten Termine</h2>
+
+<div id="appointmentList"></div>
+
+</div>
+
+</div>
+
+</section>
+
+
+<!-- ================= FINANZEN ================= -->
+
+<section id="finance" class="page">
+
+<h1 class="page-title">💰 Finanzen</h1>
+
+<p class="page-subtitle">
+Einnahmen, Ausgaben und dein aktueller Gewinn.
+</p>
+
+<div class="dashboard-grid">
+
+<div class="stat-card stat-green">
+
+<div class="stat-label">Einnahmen</div>
+
+<div class="stat-value"
+id="financeIncome">
+0,00 €
+</div>
+
+</div>
+
+<div class="stat-card stat-red">
+
+<div class="stat-label">Ausgaben</div>
+
+<div class="stat-value"
+id="financeExpenses">
+0,00 €
+</div>
+
+</div>
+
+<div class="stat-card"
+id="financeBalanceCard">
+
+<div class="stat-label">
+Gewinn / Saldo
+</div>
+
+<div class="stat-value"
+id="financeBalance">
+0,00 €
+</div>
+
+</div>
+
+</div>
+
+
+<div class="grid">
+
+<div class="card">
+
+<h2>💰 Einnahme erfassen</h2>
+
+<label>Betrag</label>
+
+<input
+id="incomeAmount"
+type="number"
+step="0.01"
+min="0"
+placeholder="z. B. 500"
+>
+
+<label>Datum</label>
+
+<input
+id="incomeDate"
+type="date"
+>
+
+<label>Kategorie</label>
+
+<select id="incomeCategory">
+
+<option>Auftrag</option>
+<option>Dienstleistung</option>
+<option>Verkauf</option>
+<option>Beratung</option>
+<option>Sonstiges</option>
+
+</select>
+
+<label>Beschreibung</label>
+
+<textarea
+id="incomeDescription"
+placeholder="Wofür wurde die Einnahme erzielt?"
+></textarea>
+
+<button class="btn"
+onclick="saveIncome()">
+💾 Einnahme speichern
+</button>
+
+</div>
+
+
+<div class="card">
+
+<h2>💸 Ausgabe erfassen</h2>
+
+<label>Betrag</label>
+
+<input
+id="expenseAmount"
+type="number"
+step="0.01"
+min="0"
+placeholder="z. B. 120"
+>
+
+<label>Datum</label>
+
+<input
+id="expenseDate"
+type="date"
+>
+
+<label>Kategorie</label>
+
+<select id="expenseCategory">
+
+<option>Material</option>
+<option>Fahrtkosten</option>
+<option>Werbung</option>
+<option>Software</option>
+<option>Telefon</option>
+<option>Büro</option>
+<option>Sonstiges</option>
+
+</select>
+
+<label>Beschreibung</label>
+
+<textarea
+id="expenseDescription"
+placeholder="Wofür wurde das Geld ausgegeben?"
+></textarea>
+
+<button class="btn"
+onclick="saveExpense()">
+💾 Ausgabe speichern
+</button>
+
+</div>
+
+
+<div class="card full">
+
+<h2>💼 Buchungen</h2>
+
+<div id="financeList"></div>
+
+</div>
+
+</div>
+
+</section>
+
+
+<!-- ================= RECHNUNGEN ================= -->
+
+<section id="invoices" class="page">
+
+<h1 class="page-title">🧾 Rechnungen</h1>
+
+<p class="page-subtitle">
+Verwalte deine offenen und bezahlten Rechnungen.
+</p>
+
+<div class="grid">
+
+<div class="card full">
+
+<div id="invoiceList"></div>
+
+<button class="btn"
+onclick="openInvoice()">
++ Rechnung hinzufügen
+</button>
+
+</div>
+
+</div>
+
+</section>
+
+
+<!-- ================= AUSWERTUNG ================= -->
+
+<section id="reports" class="page">
+
+<h1 class="page-title">📊 Auswertung</h1>
+
+<p class="page-subtitle">
+Monatlicher Überblick über dein Business.
+</p>
+
+<div class="card">
+
+<div class="month-header">
+
+<div class="month-title"
+id="reportMonth">
+</div>
+
+<div class="month-nav">
+
+<button onclick="changeReportMonth(-1)">
+‹
+</button>
+
+<button onclick="changeReportMonth(1)">
+›
+</button>
+
+</div>
+
+</div>
+
+<div class="month-summary">
+
+<div class="month-box">
+
+<span>Einnahmen</span>
+
+<strong
+id="reportIncome">
+0,00 €
+</strong>
+
+</div>
+
+<div class="month-box">
+
+<span>Ausgaben</span>
+
+<strong
+id="reportExpenses">
+0,00 €
+</strong>
+
+</div>
+
+<div class="month-box">
+
+<span>Gewinn</span>
+
+<strong
+id="reportProfit">
+0,00 €
+</strong>
+
+</div>
+
+</div>
+
+</div>
+
+</section>
+
+
+<!-- ================= EINSTELLUNGEN ================= -->
+
+<section id="settings" class="page">
+
+<h1 class="page-title">⚙️ Einstellungen</h1>
+
+<p class="page-subtitle">
+BusinessBook konfigurieren.
+</p>
+
+<div class="grid">
+
+<div class="card">
+
+<h2>🔔 Erinnerungen</h2>
+
+<p>
+Aktiviere Benachrichtigungen für deine Termine.
+</p>
+
+<button class="btn"
+onclick="requestNotifications()">
+Benachrichtigungen aktivieren
+</button>
+
+<div id="notificationStatus"
+style="margin-top:12px;color:#68727d">
+Status wird geprüft...
+</div>
+
+</div>
+
+
+<div class="card">
+
+<h2>💾 Daten</h2>
+
+<p>
+Alle Einnahmen, Ausgaben, Termine und Rechnungen
+werden direkt auf diesem Gerät gespeichert.
+</p>
+
+<button class="btn secondary"
+onclick="exportData()">
+Daten sichern
+</button>
+
+<button class="btn secondary"
+onclick="clearAllData()">
+Alle Daten löschen
+</button>
+
+</div>
+
+</div>
+
+</section>
+
 </main>
 
 
-<!-- TERMIN MODAL -->
+<!-- ================= TERMIN MODAL ================= -->
 
-<div class="modal" id="apptModal">
+<div class="modal" id="appointmentModal">
 
-  <div class="modalbox">
+<div class="modal-box">
 
-    <div class="modalhead">
+<div class="modal-head">
 
-      <h2>Neuer Termin</h2>
+<h2>Neuer Termin</h2>
 
-      <button class="close" onclick="closeAppt()">
-        ×
-      </button>
+<button class="close"
+onclick="closeAppointment()">
+×
+</button>
 
-    </div>
+</div>
 
-    <label>Datum</label>
+<label>Datum</label>
 
-    <input id="aDate" type="date">
+<input
+id="appointmentDate"
+type="date"
+>
 
-    <label>Uhrzeit</label>
+<label>Uhrzeit</label>
 
-    <input id="aTime" type="time">
+<input
+id="appointmentTime"
+type="time"
+>
 
-    <label>Kunde</label>
+<label>Kunde</label>
 
-    <input
-      id="aCustomer"
-      placeholder="Name des Kunden"
-    >
+<input
+id="appointmentCustomer"
+placeholder="Name des Kunden"
+>
 
-    <label>Notiz</label>
+<label>Notiz</label>
 
-    <textarea
-      id="aNote"
-      placeholder="z. B. Beratung, Auftrag, Besprechung..."
-    ></textarea>
+<textarea
+id="appointmentNote"
+placeholder="Weitere Informationen"
+></textarea>
 
-    <div class="reminder-box">
+<label>Erinnerung</label>
 
-      <strong>🔔 Erinnerung</strong>
+<select id="appointmentReminder">
 
-      <div class="reminder-row">
+<option value="0">
+Keine Erinnerung
+</option>
 
-        <input
-          type="checkbox"
-          id="aReminder"
-          checked
-        >
+<option value="15">
+15 Minuten vorher
+</option>
 
-        <label for="aReminder">
-          Erinnerung aktivieren
-        </label>
+<option value="30">
+30 Minuten vorher
+</option>
 
-      </div>
+<option value="60">
+1 Stunde vorher
+</option>
 
-      <select id="aReminderTime">
+<option value="1440">
+1 Tag vorher
+</option>
 
-        <option value="15">
-          15 Minuten vorher
-        </option>
+</select>
 
-        <option value="30">
-          30 Minuten vorher
-        </option>
+<button class="btn"
+onclick="saveAppointment()">
+Termin speichern
+</button>
 
-        <option value="60">
-          1 Stunde vorher
-        </option>
-
-        <option value="1440">
-          1 Tag vorher
-        </option>
-
-      </select>
-
-    </div>
-
-    <div
-      id="permissionBox"
-      class="permission"
-      style="display:none"
-    >
-
-      <strong>
-        Benachrichtigungen
-      </strong>
-
-      <div>
-        Erlaube Benachrichtigungen, damit
-        BusinessBook dich an Termine erinnern kann.
-      </div>
-
-      <button onclick="requestNotifications()">
-        Benachrichtigungen aktivieren
-      </button>
-
-    </div>
-
-    <div class="actions">
-
-      <button
-        class="btn alt"
-        onclick="closeAppt()"
-      >
-        Abbrechen
-      </button>
-
-      <button
-        class="btn"
-        onclick="saveAppt()"
-      >
-        Speichern
-      </button>
-
-    </div>
-
-  </div>
+</div>
 
 </div>
 
 
-<!-- RECHNUNGS MODAL -->
+<!-- ================= RECHNUNG MODAL ================= -->
 
 <div class="modal" id="invoiceModal">
 
-  <div class="modalbox">
+<div class="modal-box">
 
-    <div class="modalhead">
+<div class="modal-head">
 
-      <h2>Neue Rechnung</h2>
+<h2>Neue Rechnung</h2>
 
-      <button
-        class="close"
-        onclick="closeInvoice()"
-      >
-        ×
-      </button>
-
-    </div>
-
-    <label>Rechnungsnummer</label>
-
-    <input id="iNumber">
-
-    <label>Kunde</label>
-
-    <input
-      id="iCustomer"
-      placeholder="Name des Kunden"
-    >
-
-    <label>Betrag (€)</label>
-
-    <input
-      id="iAmount"
-      type="number"
-      min="0"
-      step=".01"
-    >
-
-    <label>Fällig am</label>
-
-    <input id="iDue" type="date">
-
-    <label>Status</label>
-
-    <select id="iStatus">
-
-      <option value="open">
-        Offen
-      </option>
-
-      <option value="paid">
-        Bezahlt
-      </option>
-
-    </select>
-
-    <div class="actions">
-
-      <button
-        class="btn alt"
-        onclick="closeInvoice()"
-      >
-        Abbrechen
-      </button>
-
-      <button
-        class="btn"
-        onclick="saveInvoice()"
-      >
-        Speichern
-      </button>
-
-    </div>
-
-  </div>
+<button class="close"
+onclick="closeInvoice()">
+×
+</button>
 
 </div>
 
+<label>Rechnungsnummer</label>
 
-<!-- FINANZ MODAL -->
+<input id="invoiceNumber">
 
-<div class="modal" id="financeModal">
+<label>Kunde</label>
 
-  <div class="modalbox">
+<input
+id="invoiceCustomer"
+placeholder="Name des Kunden"
+>
 
-    <div class="modalhead">
+<label>Betrag</label>
 
-      <h2 id="financeModalTitle">
-        Neue Einnahme
-      </h2>
+<input
+id="invoiceAmount"
+type="number"
+step="0.01"
+min="0"
+>
 
-      <button
-        class="close"
-        onclick="closeFinance()"
-      >
-        ×
-      </button>
+<label>Fällig am</label>
 
-    </div>
+<input
+id="invoiceDue"
+type="date"
+>
 
-    <label>Art</label>
+<label>Status</label>
 
-    <select id="fType">
+<select id="invoiceStatus">
 
-      <option value="income">
-        💰 Einnahme
-      </option>
+<option value="open">
+Offen
+</option>
 
-      <option value="expense">
-        💸 Ausgabe
-      </option>
+<option value="paid">
+Bezahlt
+</option>
 
-    </select>
+</select>
 
-    <label>Datum</label>
+<button class="btn"
+onclick="saveInvoice()">
+Rechnung speichern
+</button>
 
-    <input
-      id="fDate"
-      type="date"
-    >
-
-    <label>Betrag (€)</label>
-
-    <input
-      id="fAmount"
-      type="number"
-      min="0"
-      step=".01"
-      placeholder="z. B. 250"
-    >
-
-    <label>Kategorie</label>
-
-    <select id="fCategory">
-
-      <option value="Kunde">
-        Kunde
-      </option>
-
-      <option value="Verkauf">
-        Verkauf
-      </option>
-
-      <option value="Dienstleistung">
-        Dienstleistung
-      </option>
-
-      <option value="Sonstiges">
-        Sonstiges
-      </option>
-
-    </select>
-
-    <label>Beschreibung</label>
-
-    <textarea
-      id="fDescription"
-      placeholder="z. B. Auftrag Müller, Büromaterial..."
-    ></textarea>
-
-    <div class="actions">
-
-      <button
-        class="btn alt"
-        onclick="closeFinance()"
-      >
-        Abbrechen
-      </button>
-
-      <button
-        class="btn"
-        onclick="saveFinance()"
-      >
-        Speichern
-      </button>
-
-    </div>
-
-  </div>
+</div>
 
 </div>
 
 
 <footer>
-  BusinessBook · Deine digitale Business-Verwaltung
+BusinessBook · Deine digitale Business-Verwaltung
 </footer>
 
 
 <script>
 
-/* =========================
+/* =========================================
    DATEN
-========================= */
+========================================= */
 
-const AK = "businessBookAppointments";
-const IK = "businessBookInvoices";
-const FK = "businessBookFinance";
+const KEYS = {
 
-let current = new Date();
+income:"businessbook_income",
+expenses:"businessbook_expenses",
+appointments:"businessbook_appointments",
+invoices:"businessbook_invoices"
 
-let financeMonth = new Date();
+};
 
-let appointments = read(AK);
-let invoices = read(IK);
-let finances = read(FK);
+let income = read(KEYS.income);
+let expenses = read(KEYS.expenses);
+let appointments = read(KEYS.appointments);
+let invoices = read(KEYS.invoices);
+
+let calendarDate = new Date();
+let reportDate = new Date();
 
 
-/* =========================
-   LOCAL STORAGE
-========================= */
+/* =========================================
+   STORAGE
+========================================= */
 
 function read(key){
 
-  try{
+try{
 
-    const data =
-      JSON.parse(
-        localStorage.getItem(key)
-      );
+const data =
+JSON.parse(
+localStorage.getItem(key)
+);
 
-    return Array.isArray(data)
-      ? data
-      : [];
+return Array.isArray(data)
+? data
+: [];
 
-  }catch{
+}catch{
 
-    return [];
+return [];
 
-  }
+}
 
 }
 
 
-function write(key,data){
+function save(key,data){
 
-  localStorage.setItem(
-    key,
-    JSON.stringify(data)
-  );
+localStorage.setItem(
+key,
+JSON.stringify(data)
+);
 
 }
 
 
-/* =========================
+/* =========================================
    HILFSFUNKTIONEN
-========================= */
+========================================= */
 
-function pad(number){
+function today(){
 
-  return String(number).padStart(2,"0");
+const d = new Date();
 
-}
-
-
-function dateStr(date = new Date()){
-
-  return (
-    date.getFullYear() +
-    "-" +
-    pad(date.getMonth()+1) +
-    "-" +
-    pad(date.getDate())
-  );
+return d.getFullYear()
++"-"
++String(d.getMonth()+1).padStart(2,"0")
++"-"
++String(d.getDate()).padStart(2,"0");
 
 }
 
 
 function money(value){
 
-  return Number(value || 0)
-    .toLocaleString(
-      "de-DE",
-      {
-        minimumFractionDigits:2,
-        maximumFractionDigits:2
-      }
-    ) + " €";
+return Number(value || 0)
+.toLocaleString(
+"de-DE",
+{
+minimumFractionDigits:2,
+maximumFractionDigits:2
+}
+)
++" €";
 
 }
 
 
-/* =========================
-   BEGRÜSSUNG
-========================= */
+function escapeText(text){
 
-function greet(){
+const div =
+document.createElement("div");
 
-  const hour =
-    new Date().getHours();
+div.textContent = text || "";
 
-  document.getElementById(
-    "greeting"
-  ).textContent =
-    hour < 11
-      ? "Guten Morgen 👋"
-      : hour < 18
-        ? "Guten Tag 👋"
-        : "Guten Abend 👋";
+return div.innerHTML;
 
 }
 
 
-/* =========================
-   KALENDER
-========================= */
+function monthName(date){
 
-function renderCal(){
-
-  const calendar =
-    document.getElementById(
-      "calendar"
-    );
-
-  const year =
-    current.getFullYear();
-
-  const month =
-    current.getMonth();
-
-  calendar.innerHTML = "";
-
-  const names = [
-    "Januar",
-    "Februar",
-    "März",
-    "April",
-    "Mai",
-    "Juni",
-    "Juli",
-    "August",
-    "September",
-    "Oktober",
-    "November",
-    "Dezember"
-  ];
-
-  document.getElementById(
-    "monthTitle"
-  ).textContent =
-    names[month] +
-    " " +
-    year;
-
-
-  let first =
-    new Date(
-      year,
-      month,
-      1
-    ).getDay();
-
-  first =
-    first === 0
-      ? 6
-      : first - 1;
-
-
-  const days =
-    new Date(
-      year,
-      month + 1,
-      0
-    ).getDate();
-
-
-  const today =
-    dateStr();
-
-
-  for(
-    let i = 0;
-    i < first;
-    i++
-  ){
-
-    calendar.appendChild(
-      document.createElement("div")
-    );
-
-  }
-
-
-  for(
-    let day = 1;
-    day <= days;
-    day++
-  ){
-
-    const element =
-      document.createElement("div");
-
-    element.className =
-      "day";
-
-
-    const date =
-      year +
-      "-" +
-      pad(month + 1) +
-      "-" +
-      pad(day);
-
-
-    if(date === today){
-
-      element.classList.add(
-        "today"
-      );
-
-    }
-
-
-    const number =
-      document.createElement("div");
-
-    number.className =
-      "daynum";
-
-    number.textContent =
-      day;
-
-    element.appendChild(
-      number
-    );
-
-
-    const hasAppointment =
-      appointments.some(
-        appointment =>
-          appointment.date === date
-      );
-
-
-    if(hasAppointment){
-
-      const dot =
-        document.createElement("div");
-
-      dot.className =
-        "dot";
-
-      element.appendChild(
-        dot
-      );
-
-    }
-
-
-    element.onclick =
-      () => openAppt(date);
-
-
-    calendar.appendChild(
-      element
-    );
-
-  }
+return date.toLocaleDateString(
+"de-DE",
+{
+month:"long",
+year:"numeric"
+}
+);
 
 }
 
 
-function prevMonth(){
+/* =========================================
+   REITER
+========================================= */
 
-  current.setMonth(
-    current.getMonth() - 1
-  );
+function showPage(id,button){
 
-  renderCal();
+document
+.querySelectorAll(".page")
+.forEach(page=>{
+page.classList.remove("active");
+});
+
+document
+.getElementById(id)
+.classList.add("active");
+
+document
+.querySelectorAll(".tab")
+.forEach(tab=>{
+tab.classList.remove("active");
+});
+
+if(button){
+button.classList.add("active");
+}
+
+if(id==="reports"){
+renderReport();
+}
 
 }
 
 
-function nextMonth(){
+function showPageById(id){
 
-  current.setMonth(
-    current.getMonth() + 1
-  );
+const button =
+[...document.querySelectorAll(".tab")]
+.find(
+tab =>
+tab.getAttribute("onclick") &&
+tab.getAttribute("onclick").includes("'"+id+"'")
+);
 
-  renderCal();
+showPage(id,button);
 
-}
-
-
-/* =========================
-   ERINNERUNGEN
-========================= */
-
-function updatePermissionBox(){
-
-  const box =
-    document.getElementById(
-      "permissionBox"
-    );
-
-  if(
-    "Notification" in window &&
-    Notification.permission === "default"
-  ){
-
-    box.style.display =
-      "block";
-
-  }else{
-
-    box.style.display =
-      "none";
-
-  }
+window.scrollTo({
+top:0,
+behavior:"smooth"
+});
 
 }
 
 
-async function requestNotifications(){
-
-  if(
-    !("Notification" in window)
-  ){
-
-    alert(
-      "Dieser Browser unterstützt keine Benachrichtigungen."
-    );
-
-    return;
-
-  }
-
-  const permission =
-    await Notification.requestPermission();
-
-  updatePermissionBox();
-
-  if(
-    permission === "granted"
-  ){
-
-    alert(
-      "Benachrichtigungen sind aktiviert. 🔔"
-    );
-
-  }
-
-}
-
-
-/* =========================
-   TERMINE
-========================= */
-
-function openAppt(date){
-
-  document
-    .getElementById(
-      "apptModal"
-    )
-    .classList.add("show");
-
-
-  document.getElementById(
-    "aDate"
-  ).value =
-    date || dateStr();
-
-
-  document.getElementById(
-    "aTime"
-  ).value = "";
-
-
-  document.getElementById(
-    "aCustomer"
-  ).value = "";
-
-
-  document.getElementById(
-    "aNote"
-  ).value = "";
-
-
-  document.getElementById(
-    "aReminder"
-  ).checked = true;
-
-
-  document.getElementById(
-    "aReminderTime"
-  ).value = "30";
-
-
-  updatePermissionBox();
-
-}
-
-
-function closeAppt(){
-
-  document
-    .getElementById(
-      "apptModal"
-    )
-    .classList.remove("show");
-
-}
-
-
-function saveAppt(){
-
-  const date =
-    document.getElementById(
-      "aDate"
-    ).value;
-
-  const time =
-    document.getElementById(
-      "aTime"
-    ).value;
-
-  const customer =
-    document.getElementById(
-      "aCustomer"
-    ).value.trim();
-
-  const note =
-    document.getElementById(
-      "aNote"
-    ).value.trim();
-
-  const reminder =
-    document.getElementById(
-      "aReminder"
-    ).checked;
-
-  const reminderMinutes =
-    Number(
-      document.getElementById(
-        "aReminderTime"
-      ).value
-    );
-
-
-  if(
-    !date ||
-    !time ||
-    !customer
-  ){
-
-    alert(
-      "Bitte Datum, Uhrzeit und Kunde eingeben."
-    );
-
-    return;
-
-  }
-
-
-  appointments.push({
-
-    id:Date.now(),
-
-    date,
-
-    time,
-
-    customer,
-
-    note,
-
-    reminder,
-
-    reminderMinutes,
-
-    reminderSent:false
-
-  });
-
-
-  write(
-    AK,
-    appointments
-  );
-
-
-  closeAppt();
-
-  renderCal();
-
-  renderAppts();
-
-  checkReminders();
-
-}
-
-
-function deleteAppt(id){
-
-  if(
-    !confirm(
-      "Diesen Termin wirklich löschen?"
-    )
-  ){
-
-    return;
-
-  }
-
-
-  appointments =
-    appointments.filter(
-      appointment =>
-        appointment.id !== id
-    );
-
-
-  write(
-    AK,
-    appointments
-  );
-
-
-  renderCal();
-
-  renderAppts();
-
-}
-
-
-function renderAppts(){
-
-  const box =
-    document.getElementById(
-      "appointments"
-    );
-
-  box.innerHTML = "";
-
-
-  const now =
-    new Date();
-
-
-  const list =
-    [...appointments]
-      .sort(
-        (a,b) =>
-          (a.date + a.time)
-            .localeCompare(
-              b.date + b.time
-            )
-      )
-      .filter(
-        appointment =>
-          new Date(
-            appointment.date +
-            "T" +
-            appointment.time
-          ) >= now
-      );
-
-
-  document.getElementById(
-    "apptCount"
-  ).textContent =
-    appointments.length;
-
-
-  if(!list.length){
-
-    box.innerHTML =
-      '<div class="empty">Keine kommenden Termine.</div>';
-
-    return;
-
-  }
-
-
-  list
-    .slice(0,5)
-    .forEach(
-      appointment => {
-
-        const row =
-          document.createElement(
-            "div"
-          );
-
-        row.className =
-          "app";
-
-
-        const left =
-          document.createElement(
-            "div"
-          );
-
-
-        left.innerHTML =
-
-          "<div class=date>" +
-
-          new Date(
-            appointment.date +
-            "T00:00:00"
-          ).toLocaleDateString(
-            "de-DE"
-          ) +
-
-          "</div>" +
-
-          "<div class=customer>" +
-
-          esc(
-            appointment.customer
-          ) +
-
-          "</div>" +
-
-          (
-            appointment.note
-              ? "<div class=customer>" +
-                esc(
-                  appointment.note
-                ) +
-                "</div>"
-              : ""
-          ) +
-
-          (
-            appointment.reminder
-              ? "<div class=customer>🔔 " +
-                appointment.reminderMinutes +
-                " Min. vorher</div>"
-              : ""
-          );
-
-
-        const right =
-          document.createElement(
-            "div"
-          );
-
-        right.className =
-          "right";
-
-
-        right.innerHTML =
-
-          "<div class=time>" +
-          appointment.time +
-          "</div>";
-
-
-        const button =
-          document.createElement(
-            "button"
-          );
-
-        button.className =
-          "small";
-
-        button.textContent =
-          "Löschen";
-
-        button.onclick =
-          () =>
-            deleteAppt(
-              appointment.id
-            );
-
-
-        right.appendChild(
-          button
-        );
-
-
-        row.append(
-          left,
-          right
-        );
-
-
-        box.appendChild(
-          row
-        );
-
-      }
-    );
-
-}
-
-
-/* =========================
-   SICHERE TEXTE
-========================= */
-
-function esc(text){
-
-  const div =
-    document.createElement(
-      "div"
-    );
-
-  div.textContent =
-    text;
-
-  return div.innerHTML;
-
-}
-
-
-/* =========================
-   RECHNUNGEN
-========================= */
-
-function openInvoice(){
-
-  document
-    .getElementById(
-      "invoiceModal"
-    )
-    .classList.add("show");
-
-
-  document.getElementById(
-    "iNumber"
-  ).value =
-    "RE-" +
-    new Date().getFullYear() +
-    "-" +
-    pad(
-      invoices.length + 1
-    );
-
-
-  document.getElementById(
-    "iCustomer"
-  ).value = "";
-
-
-  document.getElementById(
-    "iAmount"
-  ).value = "";
-
-
-  document.getElementById(
-    "iDue"
-  ).value =
-    dateStr();
-
-
-  document.getElementById(
-    "iStatus"
-  ).value =
-    "open";
-
-}
-
-
-function closeInvoice(){
-
-  document
-    .getElementById(
-      "invoiceModal"
-    )
-    .classList.remove("show");
-
-}
-
-
-function saveInvoice(){
-
-  const number =
-    document.getElementById(
-      "iNumber"
-    ).value.trim();
-
-  const customer =
-    document.getElementById(
-      "iCustomer"
-    ).value.trim();
-
-  const amount =
-    parseFloat(
-      document.getElementById(
-        "iAmount"
-      ).value
-    );
-
-  const due =
-    document.getElementById(
-      "iDue"
-    ).value;
-
-  const status =
-    document.getElementById(
-      "iStatus"
-    ).value;
-
-
-  if(
-    !number ||
-    !customer ||
-    !amount ||
-    amount <= 0 ||
-    !due
-  ){
-
-    alert(
-      "Bitte alle Rechnungsfelder korrekt ausfüllen."
-    );
-
-    return;
-
-  }
-
-
-  invoices.push({
-
-    id:Date.now(),
-
-    number,
-
-    customer,
-
-    amount,
-
-    due,
-
-    status
-
-  });
-
-
-  write(
-    IK,
-    invoices
-  );
-
-
-  closeInvoice();
-
-  renderInvoices();
-
-  renderRevenue();
-
-}
-
-
-function toggleInvoice(id){
-
-  invoices =
-    invoices.map(
-      invoice =>
-        invoice.id === id
-          ? {
-              ...invoice,
-              status:
-                invoice.status === "paid"
-                  ? "open"
-                  : "paid"
-            }
-          : invoice
-    );
-
-
-  write(
-    IK,
-    invoices
-  );
-
-
-  renderInvoices();
-
-  renderRevenue();
-
-}
-
-
-function delInvoice(id){
-
-  if(
-    !confirm(
-      "Diese Rechnung wirklich löschen?"
-    )
-  ){
-
-    return;
-
-  }
-
-
-  invoices =
-    invoices.filter(
-      invoice =>
-        invoice.id !== id
-    );
-
-
-  write(
-    IK,
-    invoices
-  );
-
-
-  renderInvoices();
-
-  renderRevenue();
-
-}
-
-
-function renderInvoices(){
-
-  const box =
-    document.getElementById(
-      "invoiceList"
-    );
-
-  box.innerHTML = "";
-
-
-  const open =
-    invoices.filter(
-      invoice =>
-        invoice.status === "open"
-    ).length;
-
-
-  document.getElementById(
-    "openCount"
-  ).textContent =
-    open;
-
-
-  document.getElementById(
-    "warning"
-  ).textContent =
-    open
-      ? open +
-        " Rechnung" +
-        (
-          open === 1
-            ? ""
-            : "en"
-        ) +
-        " sind noch offen."
-      : "Keine offenen Rechnungen.";
-
-
-  if(!invoices.length){
-
-    box.innerHTML =
-      '<div class="empty">Noch keine Rechnungen angelegt.</div>';
-
-    return;
-
-  }
-
-
-  invoices
-    .slice()
-    .sort(
-      (a,b) =>
-        a.due.localeCompare(
-          b.due
-        )
-    )
-    .forEach(
-      invoice => {
-
-        const row =
-          document.createElement(
-            "div"
-          );
-
-        row.className =
-          "invoice";
-
-
-        const left =
-          document.createElement(
-            "div"
-          );
-
-
-        left.innerHTML =
-
-          "<strong>" +
-
-          esc(
-            invoice.number
-          ) +
-
-          "</strong>" +
-
-          "<span>" +
-
-          esc(
-            invoice.customer
-          ) +
-
-          " · fällig " +
-
-          new Date(
-            invoice.due +
-            "T00:00:00"
-          ).toLocaleDateString(
-            "de-DE"
-          ) +
-
-          "</span>";
-
-
-        const right =
-          document.createElement(
-            "div"
-          );
-
-        right.className =
-          "right";
-
-
-        right.innerHTML =
-
-          "<strong>" +
-
-          money(
-            invoice.amount
-          ) +
-
-          "</strong>" +
-
-          "<div class=" +
-
-          (
-            invoice.status === "paid"
-              ? "paid"
-              : "open"
-          ) +
-
-          ">" +
-
-          (
-            invoice.status === "paid"
-              ? "Bezahlt"
-              : "Offen"
-          ) +
-
-          "</div>";
-
-
-        const toggle =
-          document.createElement(
-            "button"
-          );
-
-        toggle.className =
-          "small";
-
-        toggle.textContent =
-          invoice.status === "paid"
-            ? "Auf offen"
-            : "Als bezahlt";
-
-        toggle.onclick =
-          () =>
-            toggleInvoice(
-              invoice.id
-            );
-
-
-        const del =
-          document.createElement(
-            "button"
-          );
-
-        del.className =
-          "small";
-
-        del.textContent =
-          "Löschen";
-
-        del.style.marginLeft =
-          "5px";
-
-        del.onclick =
-          () =>
-            delInvoice(
-              invoice.id
-            );
-
-
-        right.append(
-          toggle,
-          del
-        );
-
-
-        row.append(
-          left,
-          right
-        );
-
-
-        box.appendChild(
-          row
-        );
-
-      }
-    );
-
-}
-
-
-/* =========================
-   UMSATZ
-========================= */
-
-function renderRevenue(){
-
-  const now =
-    new Date();
-
-
-  const sum =
-    invoices
-      .filter(
-        invoice =>
-          invoice.status === "paid"
-      )
-      .filter(
-        invoice => {
-
-          const date =
-            new Date(
-              invoice.due +
-              "T00:00:00"
-            );
-
-          return (
-            date.getMonth() ===
-              now.getMonth() &&
-            date.getFullYear() ===
-              now.getFullYear()
-          );
-
-        }
-      )
-      .reduce(
-        (total,invoice) =>
-          total +
-          Number(
-            invoice.amount || 0
-          ),
-        0
-      );
-
-
-  document.getElementById(
-    "revenue"
-  ).textContent =
-    money(sum);
-
-}
-
-
-/* =========================
+/* =========================================
    FINANZEN
-========================= */
+========================================= */
 
-function financeMonthKey(){
+function saveIncome(){
 
-  return (
-    financeMonth.getFullYear() +
-    "-" +
-    pad(
-      financeMonth.getMonth()+1
-    )
-  );
+const amount =
+parseFloat(
+document.getElementById(
+"incomeAmount"
+).value
+);
+
+const date =
+document.getElementById(
+"incomeDate"
+).value;
+
+const category =
+document.getElementById(
+"incomeCategory"
+).value;
+
+const description =
+document.getElementById(
+"incomeDescription"
+).value.trim();
+
+if(!amount || amount<=0 || !date){
+
+alert(
+"Bitte Betrag und Datum eingeben."
+);
+
+return;
+
+}
+
+income.push({
+
+id:Date.now(),
+
+amount,
+
+date,
+
+category,
+
+description
+
+});
+
+save(KEYS.income,income);
+
+document.getElementById(
+"incomeAmount"
+).value="";
+
+document.getElementById(
+"incomeDescription"
+).value="";
+
+renderFinance();
+
+renderHome();
+
+renderReport();
+
+}
+
+
+function saveExpense(){
+
+const amount =
+parseFloat(
+document.getElementById(
+"expenseAmount"
+).value
+);
+
+const date =
+document.getElementById(
+"expenseDate"
+).value;
+
+const category =
+document.getElementById(
+"expenseCategory"
+).value;
+
+const description =
+document.getElementById(
+"expenseDescription"
+).value.trim();
+
+if(!amount || amount<=0 || !date){
+
+alert(
+"Bitte Betrag und Datum eingeben."
+);
+
+return;
+
+}
+
+expenses.push({
+
+id:Date.now(),
+
+amount,
+
+date,
+
+category,
+
+description
+
+});
+
+save(KEYS.expenses,expenses);
+
+document.getElementById(
+"expenseAmount"
+).value="";
+
+document.getElementById(
+"expenseDescription"
+).value="";
+
+renderFinance();
+
+renderHome();
+
+renderReport();
+
+}
+
+
+function deleteIncome(id){
+
+if(!confirm(
+"Einnahme löschen?"
+)) return;
+
+income =
+income.filter(
+item=>item.id!==id
+);
+
+save(KEYS.income,income);
+
+renderFinance();
+renderHome();
+renderReport();
+
+}
+
+
+function deleteExpense(id){
+
+if(!confirm(
+"Ausgabe löschen?"
+)) return;
+
+expenses =
+expenses.filter(
+item=>item.id!==id
+);
+
+save(KEYS.expenses,expenses);
+
+renderFinance();
+renderHome();
+renderReport();
 
 }
 
 
 function renderFinance(){
 
-  const names = [
-    "Januar",
-    "Februar",
-    "März",
-    "April",
-    "Mai",
-    "Juni",
-    "Juli",
-    "August",
-    "September",
-    "Oktober",
-    "November",
-    "Dezember"
-  ];
-
-
-  document.getElementById(
-    "financeMonthTitle"
-  ).textContent =
-    names[
-      financeMonth.getMonth()
-    ] +
-    " " +
-    financeMonth.getFullYear();
-
-
-  const key =
-    financeMonthKey();
-
-
-  const list =
-    finances
-      .filter(
-        item =>
-          item.date.startsWith(key)
-      )
-      .sort(
-        (a,b) =>
-          b.date.localeCompare(
-            a.date
-          )
-      );
-
-
-  let income = 0;
-
-  let expense = 0;
-
-
-  list.forEach(
-    item => {
-
-      if(
-        item.type === "income"
-      ){
-
-        income +=
-          Number(item.amount);
-
-      }else{
-
-        expense +=
-          Number(item.amount);
-
-      }
-
-    }
-  );
-
-
-  const balance =
-    income - expense;
-
-
-  document.getElementById(
-    "financeIncome"
-  ).textContent =
-    money(income);
-
-
-  document.getElementById(
-    "financeExpense"
-  ).textContent =
-    money(expense);
-
-
-  document.getElementById(
-    "financeBalance"
-  ).textContent =
-    money(balance);
-
-
-  const box =
-    document.getElementById(
-      "financeList"
-    );
-
-  box.innerHTML = "";
-
-
-  if(!list.length){
-
-    box.innerHTML =
-      '<div class="empty">Für diesen Monat wurden noch keine Einnahmen oder Ausgaben eingetragen.</div>';
-
-    renderFinanceChart(
-      income,
-      expense
-    );
-
-    return;
-
-  }
-
-
-  list.forEach(
-    item => {
-
-      const row =
-        document.createElement(
-          "div"
-        );
-
-      row.className =
-        "finance-entry";
-
-
-      const left =
-        document.createElement(
-          "div"
-        );
-
-      left.className =
-        "finance-entry-left";
-
-
-      left.innerHTML =
-
-        "<strong>" +
-
-        esc(
-          item.description ||
-          "Ohne Beschreibung"
-        ) +
-
-        "</strong>" +
-
-        "<span>" +
-
-        new Date(
-          item.date +
-          "T00:00:00"
-        ).toLocaleDateString(
-          "de-DE"
-        ) +
-
-        "</span>" +
-
-        "<span class=category-badge>" +
-
-        esc(
-          item.category
-        ) +
-
-        "</span>";
-
-
-      const right =
-        document.createElement(
-          "div"
-        );
-
-      right.className =
-        "finance-entry-right";
-
-
-      right.innerHTML =
-
-        "<div class=" +
-
-        (
-          item.type === "income"
-            ? "finance-income"
-            : "finance-expense"
-        ) +
-
-        ">" +
-
-        (
-          item.type === "income"
-            ? "+"
-            : "-"
-        ) +
-
-        money(
-          item.amount
-        ) +
-
-        "</div>";
-
-
-      const actions =
-        document.createElement(
-          "div"
-        );
-
-      actions.className =
-        "finance-actions";
-
-
-      const del =
-        document.createElement(
-          "button"
-        );
-
-      del.textContent =
-        "Löschen";
-
-      del.onclick =
-        () =>
-          deleteFinance(
-            item.id
-          );
-
-
-      actions.appendChild(
-        del
-      );
-
-      right.appendChild(
-        actions
-      );
-
-
-      row.append(
-        left,
-        right
-      );
-
-
-      box.appendChild(
-        row
-      );
-
-    }
-  );
-
-
-  renderFinanceChart(
-    income,
-    expense
-  );
-
-}
-
-
-function renderFinanceChart(
-  income,
-  expense
-){
-
-  const chart =
-    document.getElementById(
-      "financeChart"
-    );
-
-  chart.innerHTML =
-    "";
-
-
-  const max =
-    Math.max(
-      income,
-      expense,
-      1
-    );
-
-
-  const incomeWidth =
-    Math.round(
-      income / max * 100
-    );
-
-
-  const expenseWidth =
-    Math.round(
-      expense / max * 100
-    );
-
-
-  chart.innerHTML =
-
-    "<div class=chart-row>" +
-
-      "<div class=chart-label>💰 Einnahmen</div>" +
-
-      "<div class=chart-bar>" +
-
-        "<div class='chart-fill chart-income' style='width:" +
-        incomeWidth +
-        "%'></div>" +
-
-      "</div>" +
-
-      "<strong>" +
-      money(income) +
-      "</strong>" +
-
-    "</div>" +
-
-    "<div class=chart-row>" +
-
-      "<div class=chart-label>💸 Ausgaben</div>" +
-
-      "<div class=chart-bar>" +
-
-        "<div class='chart-fill chart-expense' style='width:" +
-        expenseWidth +
-        "%'></div>" +
-
-      "</div>" +
-
-      "<strong>" +
-      money(expense) +
-      "</strong>" +
-
-    "</div>";
-
-}
-
-
-function previousFinanceMonth(){
-
-  financeMonth.setMonth(
-    financeMonth.getMonth() - 1
-  );
-
-  renderFinance();
-
-}
-
-
-function nextFinanceMonth(){
-
-  financeMonth.setMonth(
-    financeMonth.getMonth() + 1
-  );
-
-  renderFinance();
-
-}
-
-
-function openFinance(type){
-
-  document
-    .getElementById(
-      "financeModal"
-    )
-    .classList.add("show");
-
-
-  document.getElementById(
-    "fType"
-  ).value =
-    type || "income";
-
-
-  document.getElementById(
-    "fDate"
-  ).value =
-    dateStr();
-
-
-  document.getElementById(
-    "fAmount"
-  ).value = "";
-
-
-  document.getElementById(
-    "fDescription"
-  ).value = "";
-
-
-  updateFinanceTitle();
-
-}
-
-
-function updateFinanceTitle(){
-
-  const type =
-    document.getElementById(
-      "fType"
-    ).value;
-
-
-  document.getElementById(
-    "financeModalTitle"
-  ).textContent =
-    type === "income"
-      ? "Neue Einnahme"
-      : "Neue Ausgabe";
-
-
-  const category =
-    document.getElementById(
-      "fCategory"
-    );
-
-
-  if(
-    type === "income"
-  ){
-
-    category.innerHTML =
-
-      "<option value='Kunde'>Kunde</option>" +
-      "<option value='Verkauf'>Verkauf</option>" +
-      "<option value='Dienstleistung'>Dienstleistung</option>" +
-      "<option value='Sonstiges'>Sonstiges</option>";
-
-  }else{
-
-    category.innerHTML =
-
-      "<option value='Material'>Material</option>" +
-      "<option value='Büro'>Büro</option>" +
-      "<option value='Fahrtkosten'>Fahrtkosten</option>" +
-      "<option value='Werbung'>Werbung</option>" +
-      "<option value='Software'>Software</option>" +
-      "<option value='Telefon/Internet'>Telefon / Internet</option>" +
-      "<option value='Sonstiges'>Sonstiges</option>";
-
-  }
-
-}
-
+const incomeTotal =
+income.reduce(
+(sum,item)=>
+sum+Number(item.amount||0),
+0
+);
+
+const expenseTotal =
+expenses.reduce(
+(sum,item)=>
+sum+Number(item.amount||0),
+0
+);
+
+const balance =
+incomeTotal-expenseTotal;
 
 document.getElementById(
-  "fType"
-).addEventListener(
-  "change",
-  updateFinanceTitle
+"financeIncome"
+).textContent =
+money(incomeTotal);
+
+document.getElementById(
+"financeExpenses"
+).textContent =
+money(expenseTotal);
+
+document.getElementById(
+"financeBalance"
+).textContent =
+money(balance);
+
+const card =
+document.getElementById(
+"financeBalanceCard"
+);
+
+card.classList.remove(
+"stat-green",
+"stat-red"
+);
+
+card.classList.add(
+balance>=0
+?"stat-green"
+:"stat-red"
 );
 
 
-function closeFinance(){
-
-  document
-    .getElementById(
-      "financeModal"
-    )
-    .classList.remove("show");
-
-}
-
-
-function saveFinance(){
-
-  const type =
-    document.getElementById(
-      "fType"
-    ).value;
-
-  const date =
-    document.getElementById(
-      "fDate"
-    ).value;
-
-  const amount =
-    parseFloat(
-      document.getElementById(
-        "fAmount"
-      ).value
-    );
-
-  const category =
-    document.getElementById(
-      "fCategory"
-    ).value;
-
-  const description =
-    document.getElementById(
-      "fDescription"
-    ).value.trim();
-
-
-  if(
-    !date ||
-    isNaN(amount) ||
-    amount <= 0
-  ){
-
-    alert(
-      "Bitte Datum und einen gültigen Betrag eingeben."
-    );
-
-    return;
-
-  }
-
-
-  finances.push({
-
-    id:Date.now(),
-
-    type,
-
-    date,
-
-    amount,
-
-    category,
-
-    description
-
-  });
-
-
-  write(
-    FK,
-    finances
-  );
-
-
-  closeFinance();
-
-  renderFinance();
-
-}
-
-
-function deleteFinance(id){
-
-  if(
-    !confirm(
-      "Diesen Eintrag wirklich löschen?"
-    )
-  ){
-
-    return;
-
-  }
-
-
-  finances =
-    finances.filter(
-      item =>
-        item.id !== id
-    );
-
-
-  write(
-    FK,
-    finances
-  );
-
-
-  renderFinance();
-
-}
-
-
-/* =========================
-   NETTO / BRUTTO
-========================= */
-
-function calc(){
-
-  const amountValue =
-    parseFloat(
-      document.getElementById(
-        "amount"
-      ).value
-    );
-
-
-  const taxValue =
-    parseFloat(
-      document.getElementById(
-        "tax"
-      ).value
-    );
-
-
-  const result =
-    document.getElementById(
-      "result"
-    );
-
-
-  result.style.display =
-    "block";
-
-
-  if(
-    isNaN(amountValue) ||
-    amountValue <= 0
-  ){
-
-    result.style.background =
-      "var(--r)";
-
-    result.style.color =
-      "var(--rt)";
-
-    result.textContent =
-      "Bitte einen gültigen Betrag eingeben.";
-
-    return;
-
-  }
-
-
-  const taxAmount =
-    amountValue *
-    taxValue /
-    100;
-
-
-  const gross =
-    amountValue +
-    taxAmount;
-
-
-  result.style.background =
-    "var(--g)";
-
-  result.style.color =
-    "var(--gt)";
-
-
-  result.innerHTML =
-
-    "Netto: " +
-
-    money(
-      amountValue
-    ) +
-
-    "<br>" +
-
-    "Steuer: " +
-
-    money(
-      taxAmount
-    ) +
-
-    "<br>" +
-
-    "Brutto: " +
-
-    money(
-      gross
-    );
-
-}
-
-
-/* =========================
-   MODAL / ESC
-========================= */
-
-document.addEventListener(
-  "keydown",
-  event => {
-
-    if(
-      event.key === "Escape"
-    ){
-
-      closeAppt();
-
-      closeInvoice();
-
-      closeFinance();
-
-    }
-
-  }
+/* Liste */
+
+const list =
+document.getElementById(
+"financeList"
 );
+
+list.innerHTML="";
+
+const all = [
+
+...income.map(item=>({
+...item,
+type:"income"
+})),
+
+...expenses.map(item=>({
+...item,
+type:"expense"
+}))
+
+]
+.sort(
+(a,b)=>
+b.date.localeCompare(a.date)
+);
+
+
+if(!all.length){
+
+list.innerHTML =
+'<div class="empty">Noch keine Buchungen.</div>';
+
+return;
+
+}
+
+
+all.forEach(item=>{
+
+const row =
+document.createElement("div");
+
+row.className="item";
+
+const left =
+document.createElement("div");
+
+left.innerHTML =
+
+"<div class='item-title'>"+
+escapeText(
+item.category
+)+
+"</div>"+
+
+"<div class='item-sub'>"+
+escapeText(
+item.description
+)+
+" · "+
+new Date(
+item.date+"T00:00:00"
+).toLocaleDateString("de-DE")+
+"</div>";
+
+const right =
+document.createElement("div");
+
+right.className="item-right";
+
+right.innerHTML =
+
+"<div class='"+(
+item.type==="income"
+?"amount-positive"
+:"amount-negative"
+)+"'>"+
+(item.type==="income"
+?"+ "
+:"- ")+
+money(item.amount)+
+"</div>";
+
+const button =
+document.createElement("button");
+
+button.className =
+"small-btn red";
+
+button.textContent="Löschen";
+
+button.onclick =
+()=>item.type==="income"
+?deleteIncome(item.id)
+:deleteExpense(item.id);
+
+right.appendChild(button);
+
+row.append(left,right);
+
+list.appendChild(row);
+
+});
+
+}
+
+
+/* =========================================
+   HOME
+========================================= */
+
+function renderHome(){
+
+const incomeTotal =
+income.reduce(
+(s,i)=>s+Number(i.amount||0),
+0
+);
+
+const expenseTotal =
+expenses.reduce(
+(s,i)=>s+Number(i.amount||0),
+0
+);
+
+const balance =
+incomeTotal-expenseTotal;
+
+document.getElementById(
+"homeIncome"
+).textContent =
+money(incomeTotal);
+
+document.getElementById(
+"homeExpenses"
+).textContent =
+money(expenseTotal);
+
+document.getElementById(
+"homeBalance"
+).textContent =
+money(balance);
+
+document.getElementById(
+"homeAppointments"
+).textContent =
+appointments.length;
+
+const box =
+document.getElementById(
+"homeOpenInvoices"
+);
+
+const open =
+invoices.filter(
+i=>i.status==="open"
+);
+
+if(!open.length){
+
+box.textContent =
+"Keine offenen Rechnungen.";
+
+}else{
+
+box.innerHTML =
+"<strong>"+
+open.length+
+"</strong> offene Rechnung"+
+(open.length===1?"":"en")+
+".";
+
+}
+
+
+/* nächste Termine */
+
+const list =
+appointments
+.slice()
+.sort(
+(a,b)=>
+(a.date+a.time)
+.localeCompare(
+b.date+b.time
+)
+)
+.filter(
+a =>
+new Date(
+a.date+"T"+a.time
+)>=new Date()
+)
+.slice(0,3);
+
+const appointmentBox =
+document.getElementById(
+"homeAppointmentsList"
+);
+
+appointmentBox.innerHTML="";
+
+if(!list.length){
+
+appointmentBox.innerHTML =
+'<div class="empty">Keine kommenden Termine.</div>';
+
+}else{
+
+list.forEach(a=>{
+
+const div =
+document.createElement("div");
+
+div.className="item";
+
+div.innerHTML =
+
+"<div>"+
+"<div class='item-title'>"+
+escapeText(a.customer)+
+"</div>"+
+"<div class='item-sub'>"+
+new Date(
+a.date+"T00:00:00"
+).toLocaleDateString("de-DE")+
+" · "+
+a.time+
+"</div>"+
+"</div>";
+
+appointmentBox.appendChild(div);
+
+});
+
+}
+
+}
+
+
+/* =========================================
+   KALENDER
+========================================= */
+
+function renderCalendar(){
+
+const calendar =
+document.getElementById(
+"calendar"
+);
+
+calendar.innerHTML="";
+
+const year =
+calendarDate.getFullYear();
+
+const month =
+calendarDate.getMonth();
+
+document.getElementById(
+"calendarTitle"
+).textContent =
+monthName(calendarDate);
+
+
+let first =
+new Date(
+year,
+month,
+1
+).getDay();
+
+first =
+first===0
+?6
+:first-1;
+
+const days =
+new Date(
+year,
+month+1,
+0
+).getDate();
+
+const todayDate =
+today();
+
+
+for(let i=0;i<first;i++){
+
+calendar.appendChild(
+document.createElement("div")
+);
+
+}
+
+
+for(let d=1;d<=days;d++){
+
+const date =
+year+
+"-"+
+String(month+1).padStart(2,"0")+
+"-"+
+String(d).padStart(2,"0");
+
+const cell =
+document.createElement("div");
+
+cell.className="day";
+
+if(date===todayDate){
+
+cell.classList.add("today");
+
+}
+
+const number =
+document.createElement("div");
+
+number.className="day-number";
+
+number.textContent=d;
+
+cell.appendChild(number);
+
+if(
+appointments.some(
+a=>a.date===date
+)
+){
+
+const dot =
+document.createElement("div");
+
+dot.className="dot";
+
+cell.appendChild(dot);
+
+}
+
+cell.onclick =
+()=>openAppointment(date);
+
+calendar.appendChild(cell);
+
+}
+
+}
+
+
+function changeMonth(value){
+
+calendarDate.setMonth(
+calendarDate.getMonth()+value
+);
+
+renderCalendar();
+
+}
+
+
+/* =========================================
+   TERMINE
+========================================= */
+
+function openAppointment(date){
+
+document
+.getElementById(
+"appointmentModal"
+)
+.classList.add("show");
+
+document.getElementById(
+"appointmentDate"
+).value =
+date || today();
+
+document.getElementById(
+"appointmentTime"
+).value="";
+
+document.getElementById(
+"appointmentCustomer"
+).value="";
+
+document.getElementById(
+"appointmentNote"
+).value="";
+
+document.getElementById(
+"appointmentReminder"
+).value="30";
+
+}
+
+
+function closeAppointment(){
+
+document
+.getElementById(
+"appointmentModal"
+)
+.classList.remove("show");
+
+}
+
+
+function saveAppointment(){
+
+const date =
+document.getElementById(
+"appointmentDate"
+).value;
+
+const time =
+document.getElementById(
+"appointmentTime"
+).value;
+
+const customer =
+document.getElementById(
+"appointmentCustomer"
+).value.trim();
+
+const note =
+document.getElementById(
+"appointmentNote"
+).value.trim();
+
+const reminder =
+Number(
+document.getElementById(
+"appointmentReminder"
+).value
+);
+
+if(!date || !time || !customer){
+
+alert(
+"Bitte Datum, Uhrzeit und Kunde eingeben."
+);
+
+return;
+
+}
+
+appointments.push({
+
+id:Date.now(),
+
+date,
+
+time,
+
+customer,
+
+note,
+
+reminder,
+
+reminderSent:false
+
+});
+
+save(
+KEYS.appointments,
+appointments
+);
+
+closeAppointment();
+
+renderCalendar();
+
+renderAppointments();
+
+renderHome();
+
+}
+
+
+function deleteAppointment(id){
+
+if(!confirm(
+"Termin wirklich löschen?"
+)) return;
+
+appointments =
+appointments.filter(
+a=>a.id!==id
+);
+
+save(
+KEYS.appointments,
+appointments
+);
+
+renderCalendar();
+renderAppointments();
+renderHome();
+
+}
+
+
+function renderAppointments(){
+
+const box =
+document.getElementById(
+"appointmentList"
+);
+
+box.innerHTML="";
+
+const list =
+appointments
+.slice()
+.sort(
+(a,b)=>
+(a.date+a.time)
+.localeCompare(
+b.date+b.time
+)
+);
+
+if(!list.length){
+
+box.innerHTML =
+'<div class="empty">Noch keine Termine.</div>';
+
+return;
+
+}
+
+list.forEach(a=>{
+
+const row =
+document.createElement("div");
+
+row.className="item";
+
+row.innerHTML =
+
+"<div>"+
+"<div class='item-title'>"+
+escapeText(a.customer)+
+"</div>"+
+"<div class='item-sub'>"+
+new Date(
+a.date+"T00:00:00"
+).toLocaleDateString("de-DE")+
+" · "+
+a.time+
+(a.note
+?" · "+escapeText(a.note)
+:"")+
+"</div>"+
+"</div>";
+
+const right =
+document.createElement("div");
+
+right.className="item-right";
+
+if(a.reminder){
+
+right.innerHTML =
+"<div>🔔 "+
+(a.reminder>=1440
+?"1 Tag"
+:a.reminder+" Min.")+
+"</div>";
+
+}
+
+const button =
+document.createElement("button");
+
+button.className="small-btn red";
+
+button.textContent="Löschen";
+
+button.onclick =
+()=>deleteAppointment(a.id);
+
+right.appendChild(button);
+
+row.appendChild(right);
+
+box.appendChild(row);
+
+});
+
+}
+
+
+/* =========================================
+   RECHNUNGEN
+========================================= */
+
+function openInvoice(){
+
+document
+.getElementById(
+"invoiceModal"
+)
+.classList.add("show");
+
+document.getElementById(
+"invoiceNumber"
+).value =
+"RE-"+
+new Date().getFullYear()+
+"-"+
+String(
+invoices.length+1
+).padStart(3,"0");
+
+document.getElementById(
+"invoiceCustomer"
+).value="";
+
+document.getElementById(
+"invoiceAmount"
+).value="";
+
+document.getElementById(
+"invoiceDue"
+).value=today();
+
+document.getElementById(
+"invoiceStatus"
+).value="open";
+
+}
+
+
+function closeInvoice(){
+
+document
+.getElementById(
+"invoiceModal"
+)
+.classList.remove("show");
+
+}
+
+
+function saveInvoice(){
+
+const number =
+document.getElementById(
+"invoiceNumber"
+).value.trim();
+
+const customer =
+document.getElementById(
+"invoiceCustomer"
+).value.trim();
+
+const amount =
+parseFloat(
+document.getElementById(
+"invoiceAmount"
+).value
+);
+
+const due =
+document.getElementById(
+"invoiceDue"
+).value;
+
+const status =
+document.getElementById(
+"invoiceStatus"
+).value;
+
+if(
+!number ||
+!customer ||
+!amount ||
+amount<=0 ||
+!due
+){
+
+alert(
+"Bitte alle Felder korrekt ausfüllen."
+);
+
+return;
+
+}
+
+invoices.push({
+
+id:Date.now(),
+
+number,
+
+customer,
+
+amount,
+
+due,
+
+status
+
+});
+
+save(
+KEYS.invoices,
+invoices
+);
+
+closeInvoice();
+
+renderInvoices();
+renderHome();
+
+}
+
+
+function deleteInvoice(id){
+
+if(!confirm(
+"Rechnung wirklich löschen?"
+)) return;
+
+invoices =
+invoices.filter(
+i=>i.id!==id
+);
+
+save(
+KEYS.invoices,
+invoices
+);
+
+renderInvoices();
+renderHome();
+
+}
+
+
+function toggleInvoice(id){
+
+invoices =
+invoices.map(
+i =>
+i.id===id
+?{
+...i,
+status:
+i.status==="paid"
+?"open"
+:"paid"
+}
+:i
+);
+
+save(
+KEYS.invoices,
+invoices
+);
+
+renderInvoices();
+renderHome();
+
+}
+
+
+function renderInvoices(){
+
+const box =
+document.getElementById(
+"invoiceList"
+);
+
+box.innerHTML="";
+
+if(!invoices.length){
+
+box.innerHTML =
+'<div class="empty">Noch keine Rechnungen vorhanden.</div>';
+
+return;
+
+}
+
+invoices
+.slice()
+.sort(
+(a,b)=>
+a.due.localeCompare(b.due)
+)
+.forEach(i=>{
+
+const row =
+document.createElement("div");
+
+row.className="item";
+
+const left =
+document.createElement("div");
+
+left.innerHTML =
+
+"<div class='item-title'>"+
+escapeText(i.number)+
+"</div>"+
+
+"<div class='item-sub'>"+
+escapeText(i.customer)+
+" · fällig "+
+new Date(
+i.due+"T00:00:00"
+).toLocaleDateString("de-DE")+
+"</div>";
+
+const right =
+document.createElement("div");
+
+right.className="item-right";
+
+right.innerHTML =
+
+"<strong>"+
+money(i.amount)+
+"</strong><br>"+
+
+"<span>"+
+(i.status==="paid"
+?"✅ Bezahlt"
+:"⚠️ Offen")+
+"</span>";
+
+const actions =
+document.createElement("div");
+
+actions.className="actions";
+
+const toggle =
+document.createElement("button");
+
+toggle.className="small-btn";
+
+toggle.textContent =
+i.status==="paid"
+?"Auf offen"
+:"Als bezahlt";
+
+toggle.onclick =
+()=>toggleInvoice(i.id);
+
+const del =
+document.createElement("button");
+
+del.className="small-btn red";
+
+del.textContent="Löschen";
+
+del.onclick =
+()=>deleteInvoice(i.id);
+
+actions.append(
+toggle,
+del
+);
+
+right.appendChild(actions);
+
+row.append(
+left,
+right
+);
+
+box.appendChild(row);
+
+});
+
+}
+
+
+/* =========================================
+   MONATSÜBERSICHT
+========================================= */
+
+function monthTotals(date){
+
+const year =
+date.getFullYear();
+
+const month =
+date.getMonth();
+
+const inc =
+income
+.filter(
+i=>{
+const d =
+new Date(
+i.date+"T00:00:00"
+);
+
+return d.getFullYear()===year &&
+d.getMonth()===month;
+}
+)
+.reduce(
+(s,i)=>s+Number(i.amount||0),
+0
+);
+
+const exp =
+expenses
+.filter(
+i=>{
+const d =
+new Date(
+i.date+"T00:00:00"
+);
+
+return d.getFullYear()===year &&
+d.getMonth()===month;
+}
+)
+.reduce(
+(s,i)=>s+Number(i.amount||0),
+0
+);
+
+return {
+income:inc,
+expenses:exp,
+profit:inc-exp
+};
+
+}
+
+
+function renderReport(){
+
+document.getElementById(
+"reportMonth"
+).textContent =
+monthName(reportDate);
+
+const totals =
+monthTotals(reportDate);
+
+document.getElementById(
+"reportIncome"
+).textContent =
+money(totals.income);
+
+document.getElementById(
+"reportExpenses"
+).textContent =
+money(totals.expenses);
+
+document.getElementById(
+"reportProfit"
+).textContent =
+money(totals.profit);
+
+}
+
+
+function changeReportMonth(value){
+
+reportDate.setMonth(
+reportDate.getMonth()+value
+);
+
+renderReport();
+
+}
+
+
+/* =========================================
+   BENACHRICHTIGUNGEN
+========================================= */
+
+async function requestNotifications(){
+
+if(!("Notification" in window)){
+
+alert(
+"Dieser Browser unterstützt keine Benachrichtigungen."
+);
+
+return;
+
+}
+
+const permission =
+await Notification.requestPermission();
+
+updateNotificationStatus();
+
+if(permission==="granted"){
+
+alert(
+"Benachrichtigungen wurden aktiviert. 🔔"
+);
+
+}
+
+}
+
+
+function updateNotificationStatus(){
+
+const box =
+document.getElementById(
+"notificationStatus"
+);
+
+if(!("Notification" in window)){
+
+box.textContent =
+"Benachrichtigungen werden nicht unterstützt.";
+
+return;
+
+}
+
+if(Notification.permission==="granted"){
+
+box.textContent =
+"✅ Benachrichtigungen sind aktiviert.";
+
+}else if(
+Notification.permission==="denied"
+){
+
+box.textContent =
+"❌ Benachrichtigungen wurden blockiert.";
+
+}else{
+
+box.textContent =
+"⚪ Noch nicht aktiviert.";
+
+}
+
+}
+
+
+/* =========================================
+   DATEN EXPORT
+========================================= */
+
+function exportData(){
+
+const data = {
+
+income,
+
+expenses,
+
+appointments,
+
+invoices
+
+};
+
+const blob =
+new Blob(
+[
+JSON.stringify(
+data,
+null,
+2
+)
+],
+{
+type:"application/json"
+}
+);
+
+const url =
+URL.createObjectURL(blob);
+
+const a =
+document.createElement("a");
+
+a.href=url;
+
+a.download =
+"businessbook-sicherung.json";
+
+a.click();
+
+URL.revokeObjectURL(url);
+
+}
+
+
+/* =========================================
+   DATEN LÖSCHEN
+========================================= */
+
+function clearAllData(){
+
+if(!confirm(
+"ACHTUNG!\n\nAlle BusinessBook-Daten auf diesem Gerät werden gelöscht.\n\nFortfahren?"
+)) return;
+
+Object.values(KEYS)
+.forEach(
+key =>
+localStorage.removeItem(key)
+);
+
+income=[];
+expenses=[];
+appointments=[];
+invoices=[];
+
+renderAll();
+
+alert(
+"Alle Daten wurden gelöscht."
+);
+
+}
+
+
+/* =========================================
+   MODAL
+========================================= */
+
+document
+.addEventListener(
+"keydown",
+event=>{
+
+if(event.key==="Escape"){
+
+closeAppointment();
+
+closeInvoice();
+
+}
+
+});
 
 
 document
-  .querySelectorAll(".modal")
-  .forEach(
-    modal => {
+.querySelectorAll(".modal")
+.forEach(
+modal=>{
 
-      modal.onclick =
-        event => {
+modal.addEventListener(
+"click",
+event=>{
 
-          if(
-            event.target === modal
-          ){
+if(event.target===modal){
 
-            modal.classList.remove(
-              "show"
-            );
-
-          }
-
-        };
-
-    }
-  );
-
-
-/* =========================
-   SERVICE WORKER
-========================= */
-
-if(
-  "serviceWorker" in navigator
-){
-
-  window.addEventListener(
-    "load",
-    () => {
-
-      navigator.serviceWorker
-        .register("./sw.js")
-        .catch(
-          error =>
-            console.error(
-              "Service Worker Fehler:",
-              error
-            )
-        );
-
-    }
-  );
+modal.classList.remove(
+"show"
+);
 
 }
 
+});
 
-/* =========================
-   ERINNERUNGEN PRÜFEN
-========================= */
-
-async function checkReminders(){
-
-  if(
-    !("Notification" in window) ||
-    Notification.permission !== "granted"
-  ){
-
-    return;
-
-  }
+});
 
 
-  const now =
-    Date.now();
-
-  let changed =
-    false;
-
-
-  appointments.forEach(
-    appointment => {
-
-      if(
-        !appointment.reminder ||
-        appointment.reminderSent
-      ){
-
-        return;
-
-      }
-
-
-      const appointmentTime =
-        new Date(
-          appointment.date +
-          "T" +
-          appointment.time
-        ).getTime();
-
-
-      const reminderTime =
-        appointmentTime -
-        appointment.reminderMinutes *
-        60000;
-
-
-      if(
-        now >= reminderTime &&
-        now < appointmentTime
-      ){
-
-        try{
-
-          new Notification(
-            "BusinessBook – Termin",
-            {
-              body:
-                "Termin um " +
-                appointment.time +
-                " Uhr mit " +
-                appointment.customer +
-                (
-                  appointment.note
-                    ? "\n" +
-                      appointment.note
-                    : ""
-                ),
-              icon:
-                "./icon-192.png",
-              tag:
-                "businessbook-" +
-                appointment.id
-            }
-          );
-
-        }catch(error){}
-
-
-        appointment.reminderSent =
-          true;
-
-        changed =
-          true;
-
-      }
-
-    }
-  );
-
-
-  if(changed){
-
-    write(
-      AK,
-      appointments
-    );
-
-  }
-
-}
-
-
-/* =========================
+/* =========================================
    START
-========================= */
+========================================= */
 
-greet();
+function renderAll(){
 
-renderCal();
-
-renderAppts();
-
-renderInvoices();
-
-renderRevenue();
+renderHome();
 
 renderFinance();
 
-checkReminders();
+renderCalendar();
 
-setInterval(
-  checkReminders,
-  30000
+renderAppointments();
+
+renderInvoices();
+
+renderReport();
+
+updateNotificationStatus();
+
+}
+
+document.getElementById(
+"incomeDate"
+).value=today();
+
+document.getElementById(
+"expenseDate"
+).value=today();
+
+renderAll();
+
+
+/* PWA */
+
+if("serviceWorker" in navigator){
+
+window.addEventListener(
+"load",
+()=>{
+
+navigator.serviceWorker
+.register("./sw.js")
+.catch(
+error =>
+console.log(
+"Service Worker Fehler:",
+error
+)
 );
+
+});
+
+}
 
 </script>
 

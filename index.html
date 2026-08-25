@@ -1,526 +1,665 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="de">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#17263a">
+<meta name="description" content="BusinessBook – deine digitale Business-Verwaltung">
+<title>BusinessBook</title>
 
-  <meta name="theme-color" content="#17263a">
-  <meta name="description" content="BusinessBook – deine digitale Business-Verwaltung">
+<style>
+*{
+  box-sizing:border-box;
+  margin:0;
+  padding:0
+}
 
-  <title>BusinessBook</title>
+body{
+  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+  background:#e9ecef;
+  color:#17263a
+}
 
-  <style>
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
+:root{
+  --n:#17263a;
+  --c:#f7f8f9;
+  --m:#68727d;
+  --l:#d8dde2;
+  --g:#dcefe3;
+  --gt:#27633d;
+  --r:#f2dfe2;
+  --rt:#79343d
+}
 
-    body {
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-      background: #e9ecef;
-      color: #17263a;
-      min-height: 100vh;
-    }
+header{
+  background:var(--n);
+  color:white;
+  padding:26px 20px;
+  position:sticky;
+  top:0;
+  z-index:20
+}
 
-    header {
-      background: #17263a;
-      color: white;
-      padding: 22px 20px;
-      position: sticky;
-      top: 0;
-      z-index: 10;
-    }
+.head{
+  max-width:1200px;
+  margin:auto
+}
 
-    .header-content {
-      max-width: 1200px;
-      margin: auto;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
+.logo{
+  font-size:34px;
+  font-weight:800
+}
 
-    .logo {
-      font-size: 24px;
-      font-weight: 700;
-    }
+.sub{
+  font-size:17px;
+  opacity:.72;
+  margin-top:4px
+}
 
-    .subtitle {
-      font-size: 12px;
-      opacity: 0.7;
-      margin-top: 3px;
-    }
+main{
+  max-width:1200px;
+  margin:auto;
+  padding:28px 20px
+}
 
-    main {
-      max-width: 1200px;
-      margin: auto;
-      padding: 20px;
-    }
+.welcome{
+  margin-bottom:22px
+}
 
-    .welcome {
-      margin-bottom: 20px;
-    }
+.welcome h1{
+  font-size:34px
+}
 
-    .welcome h1 {
-      font-size: 28px;
-      margin-bottom: 6px;
-    }
+.welcome p{
+  color:var(--m);
+  font-size:19px;
+  margin-top:5px
+}
 
-    .welcome p {
-      color: #5f6873;
-    }
+.grid{
+  display:grid;
+  grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:16px
+}
 
-    .grid {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 16px;
-    }
+.card{
+  background:var(--c);
+  border-radius:22px;
+  padding:24px;
+  box-shadow:0 8px 25px rgba(23,38,58,.08)
+}
 
-    .card {
-      background: #f5f6f7;
-      border-radius: 18px;
-      padding: 20px;
-      box-shadow: 0 4px 15px rgba(23, 38, 58, 0.08);
-    }
+.card h2{
+  font-size:23px;
+  margin-bottom:18px
+}
 
-    .card h2 {
-      font-size: 18px;
-      margin-bottom: 15px;
-    }
+.full,
+.calendar-card{
+  grid-column:1/-1
+}
 
-    /* KALENDER */
+/* KALENDER */
 
-    .calendar-card {
-      grid-column: 1 / -1;
-    }
+.calhead{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  margin-bottom:20px
+}
 
-    .calendar-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 18px;
-    }
+.month{
+  font-size:27px;
+  font-weight:800
+}
 
-    .calendar-title {
-      font-size: 20px;
-      font-weight: 700;
-    }
+.nav{
+  display:flex;
+  gap:10px
+}
 
-    .calendar-buttons {
-      display: flex;
-      gap: 8px;
-    }
+.nav button{
+  width:48px;
+  height:48px;
+  border:0;
+  border-radius:14px;
+  background:var(--n);
+  color:#fff;
+  font-size:25px;
+  cursor:pointer
+}
 
-    .calendar-buttons button {
-      width: 38px;
-      height: 38px;
-      border: none;
-      border-radius: 10px;
-      background: #17263a;
-      color: white;
-      font-size: 18px;
-      cursor: pointer;
-    }
+.weekdays,
+.calendar{
+  display:grid;
+  grid-template-columns:repeat(7,minmax(0,1fr));
+  gap:7px
+}
 
-    .weekdays,
-    .calendar {
-      display: grid;
-      grid-template-columns: repeat(7, 1fr);
-      gap: 6px;
-    }
+.weekday{
+  text-align:center;
+  font-size:14px;
+  font-weight:700;
+  color:var(--m);
+  padding-bottom:7px
+}
 
-    .weekday {
-      text-align: center;
-      font-size: 12px;
-      font-weight: 700;
-      color: #68727d;
-      padding-bottom: 6px;
-    }
+.day{
+  min-height:76px;
+  border-radius:14px;
+  background:#fff;
+  border:1px solid var(--l);
+  padding:9px;
+  cursor:pointer
+}
 
-    .day {
-      min-height: 65px;
-      border-radius: 10px;
-      background: white;
-      border: 1px solid #dde1e5;
-      padding: 7px;
-      cursor: pointer;
-      position: relative;
-    }
+.day:hover{
+  border-color:var(--n)
+}
 
-    .day:hover {
-      border-color: #17263a;
-    }
+.daynum{
+  font-weight:800;
+  font-size:16px
+}
 
-    .day-number {
-      font-size: 13px;
-      font-weight: 700;
-    }
+.today{
+  background:#e4eaf0;
+  border:2px solid var(--n)
+}
 
-    .today {
-      background: #e4eaf0;
-      border: 2px solid #17263a;
-    }
+.dot{
+  width:8px;
+  height:8px;
+  background:#78a98a;
+  border-radius:50%;
+  margin-top:10px
+}
 
-    .appointment-dot {
-      width: 7px;
-      height: 7px;
-      background: #78a98a;
-      border-radius: 50%;
-      margin-top: 8px;
-    }
+/* BUTTONS */
 
-    /* TERMINE */
+.btn{
+  width:100%;
+  border:0;
+  border-radius:14px;
+  padding:15px;
+  margin-top:16px;
+  background:var(--n);
+  color:#fff;
+  font-size:17px;
+  font-weight:700;
+  cursor:pointer
+}
 
-    .appointment {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 13px 0;
-      border-bottom: 1px solid #d8dde2;
-    }
+.btn:hover{
+  opacity:.92
+}
 
-    .appointment:last-child {
-      border-bottom: none;
-    }
+.btn.alt{
+  background:#dfe4e8;
+  color:var(--n)
+}
 
-    .date {
-      font-weight: 700;
-    }
+/* TERMINE */
 
-    .time {
-      color: #17263a;
-      font-weight: 600;
-    }
+.app{
+  display:flex;
+  justify-content:space-between;
+  gap:15px;
+  align-items:center;
+  padding:16px 0;
+  border-bottom:1px solid var(--l)
+}
 
-    .customer {
-      color: #68727d;
-      font-size: 14px;
-      margin-top: 3px;
-    }
+.app:last-child{
+  border:0
+}
 
-    .success {
-      background: #dcefe3;
-      color: #27633d;
-    }
+.date{
+  font-weight:800
+}
 
-    .warning {
-      background: #f2dfe2;
-      color: #79343d;
-    }
+.time{
+  font-weight:800
+}
 
-    .amount {
-      font-size: 28px;
-      font-weight: 700;
-      margin-bottom: 5px;
-    }
+.customer{
+  color:var(--m);
+  font-size:15px;
+  margin-top:4px
+}
 
-    .button {
-      width: 100%;
-      border: none;
-      border-radius: 12px;
-      padding: 13px;
-      margin-top: 12px;
-      background: #17263a;
-      color: white;
-      font-size: 15px;
-      font-weight: 600;
-      cursor: pointer;
-    }
+.small{
+  border:0;
+  background:var(--n);
+  color:#fff;
+  border-radius:9px;
+  padding:8px 10px;
+  cursor:pointer;
+  margin-top:7px
+}
 
-    .button:hover {
-      opacity: 0.9;
-    }
+/* UMSATZ */
 
-    input,
-    select,
-    textarea {
-      width: 100%;
-      padding: 12px;
-      margin-top: 8px;
-      margin-bottom: 12px;
-      border: 1px solid #ccd2d8;
-      border-radius: 10px;
-      background: white;
-      font-size: 16px;
-      font-family: inherit;
-    }
+.success{
+  background:var(--g);
+  color:var(--gt)
+}
 
-    textarea {
-      min-height: 90px;
-      resize: vertical;
-    }
+.warning{
+  background:var(--r);
+  color:var(--rt)
+}
 
-    label {
-      font-size: 14px;
-      font-weight: 600;
-    }
+.amount{
+  font-size:52px;
+  font-weight:800
+}
 
-    .result {
-      margin-top: 15px;
-      padding: 15px;
-      border-radius: 12px;
-      background: #dcefe3;
-      color: #27633d;
-      font-weight: 600;
-      display: none;
-    }
+.revenue-sub{
+  font-size:20px;
+  margin-top:5px
+}
 
-    .full {
-      grid-column: 1 / -1;
-    }
+/* ÜBERBLICK */
 
-    .modal {
-      display: none;
-      position: fixed;
-      inset: 0;
-      background: rgba(23, 38, 58, 0.55);
-      z-index: 100;
-      padding: 20px;
-      align-items: center;
-      justify-content: center;
-    }
+.stat{
+  display:flex;
+  justify-content:space-between;
+  padding:17px 0;
+  border-bottom:1px solid var(--l);
+  font-size:19px
+}
 
-    .modal-content {
-      background: #f5f6f7;
-      width: 100%;
-      max-width: 500px;
-      border-radius: 20px;
-      padding: 22px;
-      max-height: 90vh;
-      overflow-y: auto;
-    }
+.stat:last-child{
+  border:0
+}
 
-    .modal-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 18px;
-    }
+/* FORMULARE */
 
-    .close {
-      border: none;
-      background: transparent;
-      font-size: 28px;
-      color: #17263a;
-      cursor: pointer;
-    }
+input,
+select,
+textarea{
+  width:100%;
+  padding:14px;
+  margin:8px 0 14px;
+  border:1px solid #ccd2d8;
+  border-radius:12px;
+  background:white;
+  color:var(--n);
+  font-size:17px
+}
 
-    .empty {
-      text-align: center;
-      color: #7b838c;
-      padding: 15px;
-    }
+textarea{
+  min-height:100px;
+  resize:vertical
+}
 
-    footer {
-      text-align: center;
-      color: #7b838c;
-      font-size: 13px;
-      padding: 30px 20px;
-    }
+label{
+  font-size:15px;
+  font-weight:700
+}
 
-    @media (max-width: 700px) {
+.result{
+  display:none;
+  margin-top:15px;
+  padding:17px;
+  border-radius:14px;
+  font-weight:700;
+  line-height:1.65
+}
 
-      .grid {
-        grid-template-columns: 1fr;
-      }
+/* RECHNUNGEN */
 
-      .calendar-card,
-      .full {
-        grid-column: auto;
-      }
+.empty{
+  text-align:center;
+  color:#7b838c;
+  padding:20px
+}
 
-      main {
-        padding: 15px;
-      }
+.invoice-list{
+  display:grid;
+  gap:10px
+}
 
-      .welcome h1 {
-        font-size: 24px;
-      }
+.invoice{
+  background:#fff;
+  border:1px solid var(--l);
+  border-radius:14px;
+  padding:15px;
+  display:flex;
+  justify-content:space-between;
+  gap:12px
+}
 
-      .day {
-        min-height: 55px;
-      }
+.invoice span{
+  display:block;
+  color:var(--m);
+  font-size:14px;
+  margin-top:4px
+}
 
-      .calendar {
-        gap: 4px;
-      }
-    }
+.right{
+  text-align:right
+}
 
-    @media (min-width: 1000px) {
+.open{
+  color:var(--rt);
+  font-size:13px;
+  font-weight:700
+}
 
-      main {
-        padding-top: 35px;
-      }
+.paid{
+  color:var(--gt);
+  font-size:13px;
+  font-weight:700
+}
 
-      .welcome h1 {
-        font-size: 32px;
-      }
-    }
-  </style>
+/* MODAL */
+
+.modal{
+  display:none;
+  position:fixed;
+  inset:0;
+  background:rgba(23,38,58,.62);
+  z-index:100;
+  align-items:center;
+  justify-content:center;
+  padding:18px
+}
+
+.modal.show{
+  display:flex
+}
+
+.modalbox{
+  background:var(--c);
+  width:100%;
+  max-width:520px;
+  border-radius:22px;
+  padding:24px;
+  max-height:92vh;
+  overflow:auto
+}
+
+.modalhead{
+  display:flex;
+  justify-content:space-between;
+  margin-bottom:18px
+}
+
+.close{
+  border:0;
+  background:none;
+  font-size:32px;
+  cursor:pointer;
+  color:var(--n)
+}
+
+.actions{
+  display:flex;
+  gap:10px
+}
+
+.actions .btn{
+  margin-top:5px
+}
+
+/* FOOTER */
+
+footer{
+  text-align:center;
+  color:#7b838c;
+  font-size:14px;
+  padding:34px 20px 45px
+}
+
+/* MOBILE */
+
+@media(max-width:700px){
+
+  main{
+    padding:24px 15px
+  }
+
+  .grid{
+    grid-template-columns:1fr
+  }
+
+  .full,
+  .calendar-card{
+    grid-column:auto
+  }
+
+  .logo{
+    font-size:34px
+  }
+
+  .welcome h1{
+    font-size:31px
+  }
+
+  .card{
+    padding:20px
+  }
+
+  .day{
+    min-height:68px
+  }
+
+  .amount{
+    font-size:45px
+  }
+}
+
+@media(max-width:420px){
+
+  .day{
+    min-height:58px;
+    padding:7px
+  }
+
+  .daynum{
+    font-size:14px
+  }
+
+  .calendar,
+  .weekdays{
+    gap:4px
+  }
+
+  .month{
+    font-size:22px
+  }
+}
+</style>
 </head>
 
 <body>
 
 <header>
-  <div class="header-content">
-    <div>
-      <div class="logo">BusinessBook</div>
-      <div class="subtitle">Deine Business-Verwaltung</div>
-    </div>
+  <div class="head">
+    <div class="logo">BusinessBook</div>
+    <div class="sub">Deine Business-Verwaltung</div>
   </div>
 </header>
 
 <main>
 
-  <section class="welcome">
-    <h1>Guten Morgen 👋</h1>
-    <p>Hier ist dein heutiger Überblick.</p>
-  </section>
+<section class="welcome">
+  <h1 id="greeting">Guten Morgen 👋</h1>
+  <p>Hier ist dein heutiger Überblick.</p>
+</section>
 
-  <!-- KALENDER -->
+<div class="grid">
 
-  <section class="card calendar-card">
+<!-- KALENDER -->
 
-    <div class="calendar-header">
+<section class="card calendar-card">
 
-      <div class="calendar-title" id="monthTitle">
-        Kalender
-      </div>
+  <div class="calhead">
 
-      <div class="calendar-buttons">
-        <button onclick="previousMonth()">‹</button>
-        <button onclick="nextMonth()">›</button>
-      </div>
+    <div class="month" id="monthTitle"></div>
 
+    <div class="nav">
+      <button onclick="prevMonth()">‹</button>
+      <button onclick="nextMonth()">›</button>
     </div>
 
-    <div class="weekdays">
-      <div class="weekday">Mo</div>
-      <div class="weekday">Di</div>
-      <div class="weekday">Mi</div>
-      <div class="weekday">Do</div>
-      <div class="weekday">Fr</div>
-      <div class="weekday">Sa</div>
-      <div class="weekday">So</div>
-    </div>
+  </div>
 
-    <div class="calendar" id="calendar"></div>
+  <div class="weekdays">
+    <div class="weekday">Mo</div>
+    <div class="weekday">Di</div>
+    <div class="weekday">Mi</div>
+    <div class="weekday">Do</div>
+    <div class="weekday">Fr</div>
+    <div class="weekday">Sa</div>
+    <div class="weekday">So</div>
+  </div>
 
-    <button class="button" onclick="openModal()">
-      + Termin hinzufügen
-    </button>
+  <div class="calendar" id="calendar"></div>
 
-  </section>
+  <button class="btn" onclick="openAppt()">
+    + Termin hinzufügen
+  </button>
 
-
-  <!-- NÄCHSTE TERMINE -->
-
-  <section class="card">
-
-    <h2>📅 Nächste Termine</h2>
-
-    <div id="appointmentsList"></div>
-
-  </section>
+</section>
 
 
-  <!-- UMSATZ -->
+<!-- NÄCHSTE TERMINE -->
 
-  <section class="card success">
+<section class="card">
 
-    <h2>💰 Umsatz</h2>
+  <h2>📅 Nächste Termine</h2>
 
-    <div class="amount">2.450,00 €</div>
+  <div id="appointments"></div>
 
-    <div>Dieser Monat</div>
-
-  </section>
+</section>
 
 
-  <!-- ÜBERBLICK -->
+<!-- UMSATZ -->
 
-  <section class="card">
+<section class="card success">
 
-    <h2>📊 Überblick</h2>
+  <h2>💰 Umsatz</h2>
 
-    <div class="appointment">
-      <span>Termine</span>
-      <strong id="appointmentCount">0</strong>
-    </div>
+  <div class="amount" id="revenue">
+    0,00 €
+  </div>
 
-    <div class="appointment">
-      <span>Aufträge</span>
-      <strong>12</strong>
-    </div>
+  <div class="revenue-sub">
+    Dieser Monat
+  </div>
 
-    <div class="appointment">
-      <span>Offene Rechnungen</span>
-      <strong>3</strong>
-    </div>
-
-  </section>
+</section>
 
 
-  <!-- WARNUNG -->
+<!-- ÜBERBLICK -->
 
-  <section class="card warning">
+<section class="card">
 
-    <h2>⚠️ Aufmerksamkeit</h2>
+  <h2>📊 Überblick</h2>
 
-    <p>3 Rechnungen sind noch offen.</p>
+  <div class="stat">
+    <span>Termine</span>
+    <strong id="apptCount">0</strong>
+  </div>
 
-    <button class="button">
-      Rechnungen ansehen
-    </button>
+  <div class="stat">
+    <span>Aufträge</span>
+    <strong>12</strong>
+  </div>
 
-  </section>
+  <div class="stat">
+    <span>Offene Rechnungen</span>
+    <strong id="openCount">0</strong>
+  </div>
+
+</section>
 
 
-  <!-- NETTO BRUTTO -->
+<!-- WARNUNG -->
 
-  <section class="card full">
+<section class="card warning">
 
-    <h2>🧮 Netto / Brutto Rechner</h2>
+  <h2>⚠️ Aufmerksamkeit</h2>
 
-    <label for="amount">Betrag</label>
+  <p id="warning">
+    Keine offenen Rechnungen.
+  </p>
 
-    <input
-      id="amount"
-      type="number"
-      placeholder="z. B. 100"
-      inputmode="decimal"
-    >
+  <button
+    class="btn"
+    onclick="document.getElementById('invoices').scrollIntoView({behavior:'smooth'})"
+  >
+    Rechnungen ansehen
+  </button>
 
-    <label for="tax">Steuersatz</label>
+</section>
 
-    <select id="tax">
-      <option value="19">19 %</option>
-      <option value="7">7 %</option>
-      <option value="0">0 %</option>
-    </select>
 
-    <button class="button" onclick="calculate()">
-      Berechnen
-    </button>
+<!-- RECHNUNGEN -->
 
-    <div id="result" class="result"></div>
+<section class="card" id="invoices">
 
-  </section>
+  <h2>🧾 Rechnungen</h2>
 
+  <div id="invoiceList" class="invoice-list"></div>
+
+  <button class="btn" onclick="openInvoice()">
+    + Rechnung hinzufügen
+  </button>
+
+</section>
+
+
+<!-- NETTO BRUTTO -->
+
+<section class="card full">
+
+  <h2>🧮 Netto / Brutto Rechner</h2>
+
+  <label>Betrag</label>
+
+  <input
+    id="amount"
+    type="number"
+    min="0"
+    step=".01"
+    placeholder="z. B. 100"
+  >
+
+  <label>Steuersatz</label>
+
+  <select id="tax">
+    <option value="19">19 %</option>
+    <option value="7">7 %</option>
+    <option value="0">0 %</option>
+  </select>
+
+  <button class="btn" onclick="calc()">
+    Berechnen
+  </button>
+
+  <div id="result" class="result"></div>
+
+</section>
+
+</div>
 </main>
 
 
 <!-- TERMIN MODAL -->
 
-<div class="modal" id="appointmentModal">
+<div class="modal" id="apptModal">
 
-  <div class="modal-content">
+  <div class="modalbox">
 
-    <div class="modal-header">
+    <div class="modalhead">
 
       <h2>Neuer Termin</h2>
 
-      <button class="close" onclick="closeModal()">
+      <button class="close" onclick="closeAppt()">
         ×
       </button>
 
@@ -529,35 +668,131 @@
     <label>Datum</label>
 
     <input
-      id="appointmentDate"
+      id="aDate"
       type="date"
     >
 
     <label>Uhrzeit</label>
 
     <input
-      id="appointmentTime"
+      id="aTime"
       type="time"
     >
 
     <label>Kunde</label>
 
     <input
-      id="appointmentCustomer"
-      type="text"
+      id="aCustomer"
       placeholder="Name des Kunden"
     >
 
     <label>Notiz</label>
 
     <textarea
-      id="appointmentNote"
+      id="aNote"
       placeholder="z. B. Beratung, Auftrag, Besprechung..."
     ></textarea>
 
-    <button class="button" onclick="saveAppointment()">
-      Termin speichern
-    </button>
+    <div class="actions">
+
+      <button
+        class="btn alt"
+        onclick="closeAppt()"
+      >
+        Abbrechen
+      </button>
+
+      <button
+        class="btn"
+        onclick="saveAppt()"
+      >
+        Speichern
+      </button>
+
+    </div>
+
+  </div>
+
+</div>
+
+
+<!-- RECHNUNGS MODAL -->
+
+<div class="modal" id="invoiceModal">
+
+  <div class="modalbox">
+
+    <div class="modalhead">
+
+      <h2>Neue Rechnung</h2>
+
+      <button
+        class="close"
+        onclick="closeInvoice()"
+      >
+        ×
+      </button>
+
+    </div>
+
+    <label>Rechnungsnummer</label>
+
+    <input id="iNumber">
+
+    <label>Kunde</label>
+
+    <input
+      id="iCustomer"
+      placeholder="Name des Kunden"
+    >
+
+    <label>Betrag (€)</label>
+
+    <input
+      id="iAmount"
+      type="number"
+      min="0"
+      step=".01"
+    >
+
+    <label>Fällig am</label>
+
+    <input
+      id="iDue"
+      type="date"
+    >
+
+    <label>Status</label>
+
+    <select id="iStatus">
+
+      <option value="open">
+        Offen
+      </option>
+
+      <option value="paid">
+        Bezahlt
+      </option>
+
+    </select>
+
+    <div class="actions">
+
+      <button
+        class="btn alt"
+        onclick="closeInvoice()"
+      >
+        Abbrechen
+      </button>
+
+      <button
+        class="btn"
+        onclick="saveInvoice()"
+      >
+        Speichern
+      </button>
+
+    </div>
 
   </div>
 
@@ -571,503 +806,1204 @@
 
 <script>
 
-  /* =========================
-     KALENDER
-  ========================= */
+/* =========================
+   DATEN
+========================= */
 
-  let currentDate = new Date();
+const AK = "businessBookAppointments";
+const IK = "businessBookInvoices";
 
-  let appointments =
-    JSON.parse(localStorage.getItem("businessBookAppointments")) || [];
+let current = new Date();
 
-
-  function renderCalendar() {
-
-    const calendar =
-      document.getElementById("calendar");
-
-    const monthTitle =
-      document.getElementById("monthTitle");
-
-    calendar.innerHTML = "";
-
-    const year = currentDate.getFullYear();
-    const month = currentDate.getMonth();
-
-    const monthNames = [
-      "Januar",
-      "Februar",
-      "März",
-      "April",
-      "Mai",
-      "Juni",
-      "Juli",
-      "August",
-      "September",
-      "Oktober",
-      "November",
-      "Dezember"
-    ];
-
-    monthTitle.innerText =
-      monthNames[month] + " " + year;
-
-    let firstDay =
-      new Date(year, month, 1).getDay();
-
-    firstDay =
-      firstDay === 0 ? 6 : firstDay - 1;
-
-    const daysInMonth =
-      new Date(year, month + 1, 0).getDate();
+let appointments = read(AK);
+let invoices = read(IK);
 
 
-    for (let i = 0; i < firstDay; i++) {
+/* =========================
+   LOCAL STORAGE
+========================= */
 
-      const emptyDay =
-        document.createElement("div");
+function read(key){
 
-      calendar.appendChild(emptyDay);
-    }
+  try{
 
-
-    for (let day = 1; day <= daysInMonth; day++) {
-
-      const dayElement =
-        document.createElement("div");
-
-      dayElement.className = "day";
-
-      const dateString =
-        year + "-" +
-        String(month + 1).padStart(2, "0") +
-        "-" +
-        String(day).padStart(2, "0");
-
-
-      const today =
-        new Date();
-
-      if (
-        day === today.getDate() &&
-        month === today.getMonth() &&
-        year === today.getFullYear()
-      ) {
-
-        dayElement.classList.add("today");
-      }
-
-
-      const number =
-        document.createElement("div");
-
-      number.className =
-        "day-number";
-
-      number.innerText =
-        day;
-
-      dayElement.appendChild(number);
-
-
-      const hasAppointment =
-        appointments.some(
-          appointment =>
-            appointment.date === dateString
-        );
-
-
-      if (hasAppointment) {
-
-        const dot =
-          document.createElement("div");
-
-        dot.className =
-          "appointment-dot";
-
-        dayElement.appendChild(dot);
-      }
-
-
-      dayElement.onclick = function() {
-
-        openModal(dateString);
-
-      };
-
-
-      calendar.appendChild(dayElement);
-
-    }
-
-  }
-
-
-  function previousMonth() {
-
-    currentDate.setMonth(
-      currentDate.getMonth() - 1
-    );
-
-    renderCalendar();
-
-  }
-
-
-  function nextMonth() {
-
-    currentDate.setMonth(
-      currentDate.getMonth() + 1
-    );
-
-    renderCalendar();
-
-  }
-
-
-  /* =========================
-     TERMIN
-  ========================= */
-
-
-  function openModal(date = null) {
-
-    const modal =
-      document.getElementById(
-        "appointmentModal"
+    let data =
+      JSON.parse(
+        localStorage.getItem(key)
       );
 
-    modal.style.display =
-      "flex";
+    return Array.isArray(data)
+      ? data
+      : [];
 
+  }catch{
 
-    if (date) {
-
-      document.getElementById(
-        "appointmentDate"
-      ).value = date;
-
-    } else {
-
-      const today =
-        new Date();
-
-      document.getElementById(
-        "appointmentDate"
-      ).value =
-        today.toISOString().split("T")[0];
-
-    }
+    return [];
 
   }
 
+}
 
-  function closeModal() {
 
+function write(key,data){
+
+  localStorage.setItem(
+    key,
+    JSON.stringify(data)
+  );
+
+}
+
+
+/* =========================
+   HILFSFUNKTIONEN
+========================= */
+
+function pad(number){
+
+  return String(number).padStart(2,"0");
+
+}
+
+
+function dateStr(date = new Date()){
+
+  return (
+    date.getFullYear() +
+    "-" +
+    pad(date.getMonth()+1) +
+    "-" +
+    pad(date.getDate())
+  );
+
+}
+
+
+/* =========================
+   BEGRÜSSUNG
+========================= */
+
+function greet(){
+
+  const hour =
+    new Date().getHours();
+
+  document.getElementById(
+    "greeting"
+  ).textContent =
+    hour < 11
+      ? "Guten Morgen 👋"
+      : hour < 18
+        ? "Guten Tag 👋"
+        : "Guten Abend 👋";
+
+}
+
+
+/* =========================
+   KALENDER
+========================= */
+
+function renderCal(){
+
+  const calendar =
     document.getElementById(
-      "appointmentModal"
-    ).style.display =
-      "none";
+      "calendar"
+    );
+
+  const year =
+    current.getFullYear();
+
+  const month =
+    current.getMonth();
+
+  calendar.innerHTML = "";
+
+  const names = [
+
+    "Januar",
+    "Februar",
+    "März",
+    "April",
+    "Mai",
+    "Juni",
+    "Juli",
+    "August",
+    "September",
+    "Oktober",
+    "November",
+    "Dezember"
+
+  ];
+
+  document.getElementById(
+    "monthTitle"
+  ).textContent =
+    names[month] +
+    " " +
+    year;
+
+
+  let first =
+    new Date(
+      year,
+      month,
+      1
+    ).getDay();
+
+  first =
+    first === 0
+      ? 6
+      : first - 1;
+
+
+  const days =
+    new Date(
+      year,
+      month + 1,
+      0
+    ).getDate();
+
+
+  const today =
+    dateStr();
+
+
+  for(
+    let i = 0;
+    i < first;
+    i++
+  ){
+
+    calendar.appendChild(
+      document.createElement("div")
+    );
 
   }
 
 
-  function saveAppointment() {
+  for(
+    let day = 1;
+    day <= days;
+    day++
+  ){
+
+    const element =
+      document.createElement("div");
+
+    element.className =
+      "day";
+
 
     const date =
-      document.getElementById(
-        "appointmentDate"
-      ).value;
-
-    const time =
-      document.getElementById(
-        "appointmentTime"
-      ).value;
-
-    const customer =
-      document.getElementById(
-        "appointmentCustomer"
-      ).value.trim();
-
-    const note =
-      document.getElementById(
-        "appointmentNote"
-      ).value.trim();
+      year +
+      "-" +
+      pad(month + 1) +
+      "-" +
+      pad(day);
 
 
-    if (!date || !time || !customer) {
+    if(date === today){
 
-      alert(
-        "Bitte Datum, Uhrzeit und Kunde eingeben."
+      element.classList.add(
+        "today"
       );
-
-      return;
 
     }
 
 
-    const appointment = {
+    const number =
+      document.createElement("div");
 
-      id: Date.now(),
+    number.className =
+      "daynum";
 
-      date: date,
+    number.textContent =
+      day;
 
-      time: time,
-
-      customer: customer,
-
-      note: note
-
-    };
-
-
-    appointments.push(
-      appointment
+    element.appendChild(
+      number
     );
 
 
-    localStorage.setItem(
-      "businessBookAppointments",
-      JSON.stringify(appointments)
+    const hasAppointment =
+      appointments.some(
+        appointment =>
+          appointment.date === date
+      );
+
+
+    if(hasAppointment){
+
+      const dot =
+        document.createElement("div");
+
+      dot.className =
+        "dot";
+
+      element.appendChild(
+        dot
+      );
+
+    }
+
+
+    element.onclick =
+      () => openAppt(date);
+
+
+    calendar.appendChild(
+      element
     );
 
+  }
 
-    document.getElementById(
-      "appointmentTime"
-    ).value = "";
-
-    document.getElementById(
-      "appointmentCustomer"
-    ).value = "";
-
-    document.getElementById(
-      "appointmentNote"
-    ).value = "";
+}
 
 
-    closeModal();
+function prevMonth(){
 
-    renderCalendar();
+  current.setMonth(
+    current.getMonth() - 1
+  );
 
-    renderAppointments();
+  renderCal();
+
+}
+
+
+function nextMonth(){
+
+  current.setMonth(
+    current.getMonth() + 1
+  );
+
+  renderCal();
+
+}
+
+
+/* =========================
+   TERMINE
+========================= */
+
+function openAppt(date){
+
+  document
+    .getElementById("apptModal")
+    .classList.add("show");
+
+
+  document.getElementById(
+    "aDate"
+  ).value =
+    date || dateStr();
+
+
+  document.getElementById(
+    "aTime"
+  ).value = "";
+
+
+  document.getElementById(
+    "aCustomer"
+  ).value = "";
+
+
+  document.getElementById(
+    "aNote"
+  ).value = "";
+
+}
+
+
+function closeAppt(){
+
+  document
+    .getElementById("apptModal")
+    .classList.remove("show");
+
+}
+
+
+function saveAppt(){
+
+  const date =
+    aDate.value;
+
+  const time =
+    aTime.value;
+
+  const customer =
+    aCustomer.value.trim();
+
+  const note =
+    aNote.value.trim();
+
+
+  if(
+    !date ||
+    !time ||
+    !customer
+  ){
+
+    alert(
+      "Bitte Datum, Uhrzeit und Kunde eingeben."
+    );
+
+    return;
 
   }
 
 
-  function renderAppointments() {
+  appointments.push({
 
-    const list =
-      document.getElementById(
-        "appointmentsList"
-      );
+    id: Date.now(),
 
-    list.innerHTML = "";
+    date: date,
+
+    time: time,
+
+    customer: customer,
+
+    note: note
+
+  });
 
 
-    const sorted =
-      [...appointments].sort(
-        (a, b) =>
+  write(
+    AK,
+    appointments
+  );
+
+
+  closeAppt();
+
+  renderCal();
+
+  renderAppts();
+
+}
+
+
+function deleteAppt(id){
+
+  if(
+    !confirm(
+      "Diesen Termin wirklich löschen?"
+    )
+  ){
+
+    return;
+
+  }
+
+
+  appointments =
+    appointments.filter(
+      appointment =>
+        appointment.id !== id
+    );
+
+
+  write(
+    AK,
+    appointments
+  );
+
+
+  renderCal();
+
+  renderAppts();
+
+}
+
+
+function renderAppts(){
+
+  const box =
+    document.getElementById(
+      "appointments"
+    );
+
+  box.innerHTML = "";
+
+
+  const now =
+    new Date();
+
+
+  const list =
+    [...appointments]
+      .sort(
+        (a,b) =>
           (a.date + a.time)
             .localeCompare(
               b.date + b.time
             )
-      );
-
-
-    const upcoming =
-      sorted.filter(
+      )
+      .filter(
         appointment =>
           new Date(
             appointment.date +
             "T" +
             appointment.time
-          ) >= new Date()
+          ) >= now
       );
 
 
-    document.getElementById(
-      "appointmentCount"
-    ).innerText =
-      appointments.length;
+  document.getElementById(
+    "apptCount"
+  ).textContent =
+    appointments.length;
 
 
-    if (upcoming.length === 0) {
+  if(!list.length){
 
-      list.innerHTML =
-        '<div class="empty">Keine kommenden Termine.</div>';
+    box.innerHTML =
+      '<div class="empty">Keine kommenden Termine.</div>';
 
-      return;
+    return;
 
-    }
-
-
-    upcoming
-      .slice(0, 5)
-      .forEach(appointment => {
-
-        const element =
-          document.createElement("div");
-
-        element.className =
-          "appointment";
+  }
 
 
-        const formattedDate =
+  list
+    .slice(0,5)
+    .forEach(
+      appointment => {
+
+        const row =
+          document.createElement(
+            "div"
+          );
+
+        row.className =
+          "app";
+
+
+        const left =
+          document.createElement(
+            "div"
+          );
+
+
+        left.innerHTML =
+
+          "<div class=date>" +
+
           new Date(
             appointment.date +
             "T00:00:00"
           ).toLocaleDateString(
-            "de-DE",
-            {
-              day: "2-digit",
-              month: "2-digit",
-              year: "numeric"
-            }
+            "de-DE"
+          ) +
+
+          "</div>" +
+
+          "<div class=customer>" +
+
+          esc(
+            appointment.customer
+          ) +
+
+          "</div>" +
+
+          (
+            appointment.note
+              ? "<div class=customer>" +
+                esc(
+                  appointment.note
+                ) +
+                "</div>"
+              : ""
           );
 
 
-        element.innerHTML = `
+        const right =
+          document.createElement(
+            "div"
+          );
 
-          <div>
+        right.className =
+          "right";
 
-            <div class="date">
-              ${formattedDate}
-            </div>
 
-            <div class="customer">
-              ${escapeHtml(appointment.customer)}
-            </div>
+        right.innerHTML =
 
-            ${
-              appointment.note
-                ? `<div class="customer">
-                    ${escapeHtml(appointment.note)}
-                   </div>`
-                : ""
+          "<div class=time>" +
+          appointment.time +
+          "</div>";
+
+
+        const button =
+          document.createElement(
+            "button"
+          );
+
+        button.className =
+          "small";
+
+        button.textContent =
+          "Löschen";
+
+        button.onclick =
+          () =>
+            deleteAppt(
+              appointment.id
+            );
+
+
+        right.appendChild(
+          button
+        );
+
+
+        row.append(
+          left,
+          right
+        );
+
+
+        box.appendChild(
+          row
+        );
+
+      }
+    );
+
+}
+
+
+/* =========================
+   SICHERE TEXTDARSTELLUNG
+========================= */
+
+function esc(text){
+
+  const div =
+    document.createElement(
+      "div"
+    );
+
+  div.textContent =
+    text;
+
+  return div.innerHTML;
+
+}
+
+
+/* =========================
+   RECHNUNGEN
+========================= */
+
+function openInvoice(){
+
+  document
+    .getElementById(
+      "invoiceModal"
+    )
+    .classList.add("show");
+
+
+  iNumber.value =
+    "RE-" +
+    new Date().getFullYear() +
+    "-" +
+    pad(
+      invoices.length + 1
+    );
+
+
+  iCustomer.value = "";
+
+  iAmount.value = "";
+
+  iDue.value =
+    dateStr();
+
+  iStatus.value =
+    "open";
+
+}
+
+
+function closeInvoice(){
+
+  document
+    .getElementById(
+      "invoiceModal"
+    )
+    .classList.remove("show");
+
+}
+
+
+function saveInvoice(){
+
+  const number =
+    iNumber.value.trim();
+
+  const customer =
+    iCustomer.value.trim();
+
+  const amount =
+    parseFloat(
+      iAmount.value
+    );
+
+  const due =
+    iDue.value;
+
+  const status =
+    iStatus.value;
+
+
+  if(
+    !number ||
+    !customer ||
+    !amount ||
+    amount <= 0 ||
+    !due
+  ){
+
+    alert(
+      "Bitte alle Rechnungsfelder korrekt ausfüllen."
+    );
+
+    return;
+
+  }
+
+
+  invoices.push({
+
+    id: Date.now(),
+
+    number: number,
+
+    customer: customer,
+
+    amount: amount,
+
+    due: due,
+
+    status: status
+
+  });
+
+
+  write(
+    IK,
+    invoices
+  );
+
+
+  closeInvoice();
+
+  renderInvoices();
+
+  renderRevenue();
+
+}
+
+
+function toggleInvoice(id){
+
+  invoices =
+    invoices.map(
+      invoice =>
+        invoice.id === id
+          ? {
+              ...invoice,
+              status:
+                invoice.status === "paid"
+                  ? "open"
+                  : "paid"
             }
-
-          </div>
-
-          <div class="time">
-            ${appointment.time}
-          </div>
-
-        `;
+          : invoice
+    );
 
 
-        list.appendChild(element);
+  write(
+    IK,
+    invoices
+  );
 
-      });
+
+  renderInvoices();
+
+  renderRevenue();
+
+}
+
+
+function delInvoice(id){
+
+  if(
+    !confirm(
+      "Diese Rechnung wirklich löschen?"
+    )
+  ){
+
+    return;
 
   }
 
 
-  function escapeHtml(text) {
+  invoices =
+    invoices.filter(
+      invoice =>
+        invoice.id !== id
+    );
 
-    const div =
-      document.createElement("div");
 
-    div.innerText =
-      text;
+  write(
+    IK,
+    invoices
+  );
 
-    return div.innerHTML;
+
+  renderInvoices();
+
+  renderRevenue();
+
+}
+
+
+function renderInvoices(){
+
+  const box =
+    document.getElementById(
+      "invoiceList"
+    );
+
+  box.innerHTML = "";
+
+
+  const open =
+    invoices.filter(
+      invoice =>
+        invoice.status === "open"
+    ).length;
+
+
+  document.getElementById(
+    "openCount"
+  ).textContent =
+    open;
+
+
+  document.getElementById(
+    "warning"
+  ).textContent =
+    open
+      ? open +
+        " Rechnung" +
+        (
+          open === 1
+            ? ""
+            : "en"
+        ) +
+        " sind noch offen."
+      : "Keine offenen Rechnungen.";
+
+
+  if(!invoices.length){
+
+    box.innerHTML =
+      '<div class="empty">Noch keine Rechnungen angelegt.</div>';
+
+    return;
 
   }
 
 
-  /* =========================
-     NETTO / BRUTTO
-  ========================= */
+  invoices
+    .slice()
+    .sort(
+      (a,b) =>
+        a.due.localeCompare(
+          b.due
+        )
+    )
+    .forEach(
+      invoice => {
+
+        const row =
+          document.createElement(
+            "div"
+          );
+
+        row.className =
+          "invoice";
 
 
-  function calculate() {
+        const left =
+          document.createElement(
+            "div"
+          );
 
-    const amount =
-      parseFloat(
-        document.getElementById(
-          "amount"
-        ).value
+
+        left.innerHTML =
+
+          "<strong>" +
+
+          esc(
+            invoice.number
+          ) +
+
+          "</strong>" +
+
+          "<span>" +
+
+          esc(
+            invoice.customer
+          ) +
+
+          " · fällig " +
+
+          new Date(
+            invoice.due +
+            "T00:00:00"
+          ).toLocaleDateString(
+            "de-DE"
+          ) +
+
+          "</span>";
+
+
+        const right =
+          document.createElement(
+            "div"
+          );
+
+        right.className =
+          "right";
+
+
+        right.innerHTML =
+
+          "<strong>" +
+
+          invoice.amount.toLocaleString(
+            "de-DE",
+            {
+              minimumFractionDigits:2
+            }
+          ) +
+
+          " €</strong>" +
+
+          "<div class=" +
+
+          (
+            invoice.status === "paid"
+              ? "paid"
+              : "open"
+          ) +
+
+          ">" +
+
+          (
+            invoice.status === "paid"
+              ? "Bezahlt"
+              : "Offen"
+          ) +
+
+          "</div>";
+
+
+        const toggle =
+          document.createElement(
+            "button"
+          );
+
+        toggle.className =
+          "small";
+
+        toggle.textContent =
+          invoice.status === "paid"
+            ? "Auf offen"
+            : "Als bezahlt";
+
+        toggle.onclick =
+          () =>
+            toggleInvoice(
+              invoice.id
+            );
+
+
+        const del =
+          document.createElement(
+            "button"
+          );
+
+        del.className =
+          "small";
+
+        del.textContent =
+          "Löschen";
+
+        del.style.marginLeft =
+          "5px";
+
+        del.onclick =
+          () =>
+            delInvoice(
+              invoice.id
+            );
+
+
+        right.append(
+          toggle,
+          del
+        );
+
+
+        row.append(
+          left,
+          right
+        );
+
+
+        box.appendChild(
+          row
+        );
+
+      }
+    );
+
+}
+
+
+/* =========================
+   UMSATZ
+========================= */
+
+function renderRevenue(){
+
+  const now =
+    new Date();
+
+
+  const sum =
+    invoices
+      .filter(
+        invoice =>
+          invoice.status === "paid"
+      )
+      .filter(
+        invoice => {
+
+          const date =
+            new Date(
+              invoice.due +
+              "T00:00:00"
+            );
+
+          return (
+            date.getMonth() ===
+              now.getMonth() &&
+            date.getFullYear() ===
+              now.getFullYear()
+          );
+
+        }
+      )
+      .reduce(
+        (total,invoice) =>
+          total +
+          Number(
+            invoice.amount || 0
+          ),
+        0
       );
 
-    const tax =
-      parseFloat(
-        document.getElementById(
-          "tax"
-        ).value
-      );
 
-    const result =
+  document.getElementById(
+    "revenue"
+  ).textContent =
+
+    sum.toLocaleString(
+      "de-DE",
+      {
+        minimumFractionDigits:2
+      }
+    ) +
+
+    " €";
+
+}
+
+
+/* =========================
+   NETTO / BRUTTO
+========================= */
+
+function calc(){
+
+  const amountValue =
+    parseFloat(
       document.getElementById(
-        "result"
-      );
+        "amount"
+      ).value
+    );
 
 
-    if (
-      isNaN(amount) ||
-      amount <= 0
-    ) {
+  const taxValue =
+    parseFloat(
+      document.getElementById(
+        "tax"
+      ).value
+    );
 
-      result.style.display =
-        "block";
 
-      result.style.background =
-        "#f2dfe2";
+  const result =
+    document.getElementById(
+      "result"
+    );
 
-      result.style.color =
-        "#79343d";
 
-      result.innerHTML =
-        "Bitte einen gültigen Betrag eingeben.";
+  result.style.display =
+    "block";
 
-      return;
+
+  if(
+    isNaN(amountValue) ||
+    amountValue <= 0
+  ){
+
+    result.style.background =
+      "var(--r)";
+
+    result.style.color =
+      "var(--rt)";
+
+    result.textContent =
+      "Bitte einen gültigen Betrag eingeben.";
+
+    return;
+
+  }
+
+
+  const taxAmount =
+    amountValue *
+    taxValue /
+    100;
+
+
+  const gross =
+    amountValue +
+    taxAmount;
+
+
+  result.style.background =
+    "var(--g)";
+
+  result.style.color =
+    "var(--gt)";
+
+
+  result.innerHTML =
+
+    "Netto: " +
+
+    amountValue.toLocaleString(
+      "de-DE",
+      {
+        minimumFractionDigits:2
+      }
+    ) +
+
+    " €<br>" +
+
+    "Steuer: " +
+
+    taxAmount.toLocaleString(
+      "de-DE",
+      {
+        minimumFractionDigits:2
+      }
+    ) +
+
+    " €<br>" +
+
+    "Brutto: " +
+
+    gross.toLocaleString(
+      "de-DE",
+      {
+        minimumFractionDigits:2
+      }
+    ) +
+
+    " €";
+
+}
+
+
+/* =========================
+   MODAL / ESC
+========================= */
+
+document.addEventListener(
+  "keydown",
+  event => {
+
+    if(
+      event.key === "Escape"
+    ){
+
+      closeAppt();
+
+      closeInvoice();
 
     }
 
-
-    const net =
-      amount;
-
-    const taxAmount =
-      net * tax / 100;
-
-    const gross =
-      net + taxAmount;
-
-
-    result.style.display =
-      "block";
-
-    result.style.background =
-      "#dcefe3";
-
-    result.style.color =
-      "#27633d";
-
-
-    result.innerHTML =
-
-      "Netto: " +
-      net.toFixed(2) +
-      " €<br>" +
-
-      "Steuer: " +
-      taxAmount.toFixed(2) +
-      " €<br>" +
-
-      "Brutto: " +
-      gross.toFixed(2) +
-      " €";
-
   }
+);
 
 
-  /* =========================
-     START
-  ========================= */
+document
+  .querySelectorAll(".modal")
+  .forEach(
+    modal => {
 
-  renderCalendar();
+      modal.onclick =
+        event => {
 
-  renderAppointments();
+          if(
+            event.target === modal
+          ){
+
+            modal.classList.remove(
+              "show"
+            );
+
+          }
+
+        };
+
+    }
+  );
+
+
+/* =========================
+   START
+========================= */
+
+greet();
+
+renderCal();
+
+renderAppts();
+
+renderInvoices();
+
+renderRevenue();
 
 </script>
 

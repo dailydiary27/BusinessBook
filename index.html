@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <meta name="theme-color" content="#17263a">
+  <meta name="description" content="BusinessBook – deine digitale Business-Verwaltung">
+
+  <title>BusinessBook</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background: #e9ecef;
+      color: #17263a;
+      min-height: 100vh;
+    }
+
+    header {
+      background: #17263a;
+      color: white;
+      padding: 22px 20px;
+      position: sticky;
+      top: 0;
+      z-index: 10;
+    }
+
+    .header-content {
+      max-width: 1200px;
+      margin: auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .logo {
+      font-size: 24px;
+      font-weight: 700;
+    }
+
+    .subtitle {
+      font-size: 12px;
+      opacity: 0.7;
+      margin-top: 3px;
+    }
+
+    main {
+      max-width: 1200px;
+      margin: auto;
+      padding: 20px;
+    }
+
+    .welcome {
+      margin-bottom: 20px;
+    }
+
+    .welcome h1 {
+      font-size: 28px;
+      margin-bottom: 6px;
+    }
+
+    .welcome p {
+      color: #5f6873;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 16px;
+    }
+
+    .card {
+      background: #f5f6f7;
+      border-radius: 18px;
+      padding: 20px;
+      box-shadow: 0 4px 15px rgba(23, 38, 58, 0.08);
+    }
+
+    .card h2 {
+      font-size: 18px;
+      margin-bottom: 15px;
+    }
+
+    .appointment {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 13px 0;
+      border-bottom: 1px solid #d8dde2;
+    }
+
+    .appointment:last-child {
+      border-bottom: none;
+    }
+
+    .date {
+      font-weight: 700;
+    }
+
+    .time {
+      color: #17263a;
+      font-weight: 600;
+    }
+
+    .customer {
+      color: #68727d;
+      font-size: 14px;
+      margin-top: 3px;
+    }
+
+    .success {
+      background: #dcefe3;
+      color: #27633d;
+    }
+
+    .warning {
+      background: #f2dfe2;
+      color: #79343d;
+    }
+
+    .amount {
+      font-size: 28px;
+      font-weight: 700;
+      margin-bottom: 5px;
+    }
+
+    .label {
+      color: #68727d;
+      font-size: 14px;
+    }
+
+    .button {
+      width: 100%;
+      border: none;
+      border-radius: 12px;
+      padding: 13px;
+      margin-top: 12px;
+      background: #17263a;
+      color: white;
+      font-size: 15px;
+      font-weight: 600;
+      cursor: pointer;
+    }
+
+    .button:hover {
+      opacity: 0.9;
+    }
+
+    input,
+    select {
+      width: 100%;
+      padding: 12px;
+      margin-top: 8px;
+      margin-bottom: 12px;
+      border: 1px solid #ccd2d8;
+      border-radius: 10px;
+      background: white;
+      font-size: 16px;
+    }
+
+    .result {
+      margin-top: 15px;
+      padding: 15px;
+      border-radius: 12px;
+      background: #dcefe3;
+      color: #27633d;
+      font-weight: 600;
+      display: none;
+    }
+
+    .full {
+      grid-column: 1 / -1;
+    }
+
+    footer {
+      text-align: center;
+      color: #7b838c;
+      font-size: 13px;
+      padding: 30px 20px;
+    }
+
+    @media (max-width: 700px) {
+      .grid {
+        grid-template-columns: 1fr;
+      }
+
+      main {
+        padding: 15px;
+      }
+
+      .welcome h1 {
+        font-size: 24px;
+      }
+
+      .full {
+        grid-column: auto;
+      }
+    }
+
+    @media (min-width: 1000px) {
+      main {
+        padding-top: 35px;
+      }
+
+      .welcome h1 {
+        font-size: 32px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+<header>
+  <div class="header-content">
+    <div>
+      <div class="logo">BusinessBook</div>
+      <div class="subtitle">Deine Business-Verwaltung</div>
+    </div>
+  </div>
+</header>
+
+<main>
+
+  <section class="welcome">
+    <h1>Guten Morgen 👋</h1>
+    <p>Hier ist dein heutiger Überblick.</p>
+  </section>
+
+  <section class="grid">
+
+    <div class="card">
+      <h2>📅 Nächste Termine</h2>
+
+      <div class="appointment">
+        <div>
+          <div class="date">Heute</div>
+          <div class="customer">Max Mustermann</div>
+        </div>
+        <div class="time">10:00</div>
+      </div>
+
+      <div class="appointment">
+        <div>
+          <div class="date">Heute</div>
+          <div class="customer">Anna Müller</div>
+        </div>
+        <div class="time">14:30</div>
+      </div>
+
+      <div class="appointment">
+        <div>
+          <div class="date">Morgen</div>
+          <div class="customer">Thomas Schneider</div>
+        </div>
+        <div class="time">09:00</div>
+      </div>
+
+      <button class="button" onclick="alert('Kalender kommt als nächstes.')">
+        + Termin hinzufügen
+      </button>
+    </div>
+
+    <div class="card success">
+      <h2>💰 Umsatz</h2>
+      <div class="amount">2.450,00 €</div>
+      <div>Dieser Monat</div>
+    </div>
+
+    <div class="card">
+      <h2>📊 Überblick</h2>
+
+      <div class="appointment">
+        <span>Termine</span>
+        <strong>18</strong>
+      </div>
+
+      <div class="appointment">
+        <span>Aufträge</span>
+        <strong>12</strong>
+      </div>
+
+      <div class="appointment">
+        <span>Offene Rechnungen</span>
+        <strong>3</strong>
+      </div>
+    </div>
+
+    <div class="card warning">
+      <h2>⚠️ Aufmerksamkeit</h2>
+      <p>3 Rechnungen sind noch offen.</p>
+      <button class="button">
+        Rechnungen ansehen
+      </button>
+    </div>
+
+    <div class="card full">
+      <h2>🧮 Netto / Brutto Rechner</h2>
+
+      <label for="amount">Betrag</label>
+      <input
+        id="amount"
+        type="number"
+        placeholder="z. B. 100"
+        inputmode="decimal"
+      >
+
+      <label for="tax">Steuersatz</label>
+      <select id="tax">
+        <option value="19">19 %</option>
+        <option value="7">7 %</option>
+        <option value="0">0 %</option>
+      </select>
+
+      <button class="button" onclick="calculate()">
+        Berechnen
+      </button>
+
+      <div id="result" class="result"></div>
+    </div>
+
+  </section>
+
+</main>
+
+<footer>
+  BusinessBook · Deine digitale Business-Verwaltung
+</footer>
+
+<script>
+  function calculate() {
+
+    const amount = parseFloat(
+      document.getElementById("amount").value
+    );
+
+    const tax = parseFloat(
+      document.getElementById("tax").value
+    );
+
+    const result = document.getElementById("result");
+
+    if (isNaN(amount) || amount <= 0) {
+      result.style.display = "block";
+      result.style.background = "#f2dfe2";
+      result.style.color = "#79343d";
+      result.innerHTML = "Bitte einen gültigen Betrag eingeben.";
+      return;
+    }
+
+    const net = amount;
+    const taxAmount = net * tax / 100;
+    const gross = net + taxAmount;
+
+    result.style.display = "block";
+    result.style.background = "#dcefe3";
+    result.style.color = "#27633d";
+
+    result.innerHTML =
+      "Netto: " + net.toFixed(2) + " €<br>" +
+      "Steuer: " + taxAmount.toFixed(2) + " €<br>" +
+      "Brutto: " + gross.toFixed(2) + " €";
+  }
+</script>
+
+</body>
+</html>
